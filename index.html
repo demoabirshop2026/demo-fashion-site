@@ -51,7 +51,12 @@
     .wide-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.wide-actions button,.wide-actions a{border:0;border-radius:18px;padding:13px 12px;text-decoration:none;text-align:center;font-weight:800;cursor:pointer}.wide-actions .add{background:var(--dark);color:#fff}.wide-actions .order{background:linear-gradient(135deg,#25d366,#1da851);color:#fff}
     .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(201,151,75,.15)}.cart-item img{width:64px;height:64px;border-radius:15px;object-fit:cover}.cart-item h4{font-size:13px}.cart-item p{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{width:26px;height:26px;border:0;border-radius:50%;background:var(--soft);font-weight:800}.remove{border:0;background:#fff0f0;color:var(--danger);padding:8px;border-radius:12px;font-weight:800}
     .summary{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:13px 0}.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);padding:5px 0}.summary-row.total{font-size:19px;color:var(--dark);font-weight:800;border-top:1px solid rgba(201,151,75,.18);margin-top:6px;padding-top:11px}.delivery-select{border:1px solid rgba(201,151,75,.24);background:#fff;border-radius:16px;padding:12px;outline:none;width:100%;font-family:inherit}.form{display:grid;gap:10px}.form input,.form textarea,.form select{border:1px solid rgba(201,151,75,.24);border-radius:16px;padding:12px;outline:none;font-family:inherit;background:#fff}.form textarea{min-height:70px;resize:vertical}.order-buttons{display:grid;grid-template-columns:1fr;gap:10px}.checkout{border:0;border-radius:18px;padding:14px;color:#fff;font-weight:800;font-size:15px;cursor:pointer}.checkout.whatsapp{background:linear-gradient(135deg,#25d366,#1da851)}.checkout.website{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#19100d}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}.success-msg{display:none;background:#eafff1;color:var(--success);border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:12px;font-size:13px;line-height:1.6}.success-msg.show{display:block}
-    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}}
+    .payment-warning{display:none;background:#fff1f1;color:#9b1c1c;border:1px solid rgba(173,52,52,.35);border-radius:16px;padding:12px;font-size:13px;line-height:1.6;font-weight:700}
+    .payment-warning.show{display:block}
+    .checkout.blocked{background:#e8e0d7!important;color:#9a8b82!important;cursor:not-allowed;opacity:.78;box-shadow:none}
+    .payment-popup{position:fixed;left:18px;right:18px;bottom:105px;z-index:80;background:#19100d;color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 15px 40px rgba(25,16,13,.28);display:none;font-size:13px;line-height:1.6;text-align:center}
+    .payment-popup.show{display:block}
+    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}.payment-popup{left:50%;right:auto;transform:translateX(-50%);width:520px}}
     @media(max-width:370px){.products{gap:10px;padding:0 12px}.product-card img{height:165px}.info{padding:10px}.actions{grid-template-columns:1fr}.hero h2{font-size:25px}.features{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box select{width:100%}}
   </style>
 </head>
@@ -175,12 +180,22 @@
         <input id="customerName" placeholder="আপনার নাম">
         <input id="customerPhone" placeholder="মোবাইল নাম্বার">
         <textarea id="customerAddress" placeholder="পূর্ণ ঠিকানা"></textarea>
-        <select id="paymentMethod">
+
+        <select id="paymentMethod" onchange="handlePaymentMethodChange()">
           <option value="Cash on Delivery" selected>Cash on Delivery</option>
           <option value="bKash">bKash</option>
           <option value="Nagad">Nagad</option>
           <option value="Bank Transfer">Bank Transfer</option>
         </select>
+
+        <div class="payment-warning" id="paymentWarning">
+          দুঃখিত, এই মুহূর্তে bKash, Nagad এবং Bank Transfer পেমেন্ট অপশন চালু নেই। অর্ডার করতে অনুগ্রহ করে Cash on Delivery সিলেক্ট করুন।
+        </div>
+
+        <div class="payment-popup" id="paymentPopup">
+          অর্ডার সাবমিট করতে অনুগ্রহ করে Payment Method থেকে Cash on Delivery সিলেক্ট করুন।
+        </div>
+
         <textarea id="customerNote" placeholder="কাস্টমার নোট / বিশেষ নির্দেশনা (Optional)"></textarea>
         <div class="success-msg" id="websiteOrderSuccess">অর্ডার Website-এ সাবমিট হয়েছে। আমরা দ্রুত যোগাযোগ করবো।</div>
         <div class="order-buttons">
@@ -188,7 +203,7 @@
           <button class="checkout website" onclick="submitWebsiteOrder()">Website এ অর্ডার সাবমিট করুন</button>
         </div>
       </div>
-      <p class="note">নোট: WhatsApp অর্ডার সরাসরি WhatsApp-এ যাবে। Website Submit করলে অর্ডার Netlify Forms-এ সেভ হবে।</p>
+      <p class="note">নোট: আপাতত Website ও WhatsApp অর্ডার শুধুমাত্র Cash on Delivery-এর জন্য চালু আছে।</p>
     </div>
   </div>
 
@@ -288,9 +303,6 @@
     function getGrandTotal(){return getSubtotal() + getDeliveryInfo().charge}
 
     function generateOrderId(){
-      const now = new Date();
-      const datePart = now.getFullYear().toString().slice(-2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
-      const timePart = String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0') + String(now.getSeconds()).padStart(2,'0');
       return String(Math.floor(100000 + Math.random() * 900000));
     }
 
@@ -316,6 +328,9 @@
       document.getElementById('customerAddress').value = '';
       document.getElementById('customerNote').value = '';
       document.getElementById('paymentMethod').value = 'Cash on Delivery';
+      document.getElementById('paymentWarning').classList.remove('show');
+      document.getElementById('paymentPopup').classList.remove('show');
+      handlePaymentMethodChange();
     }
 
     function getOrderItemsText(separator='\n'){
@@ -386,6 +401,7 @@
 
     function openCart(){
       renderCart();
+      handlePaymentMethodChange();
       document.getElementById('cartModal').classList.add('show');
     }
 
@@ -458,8 +474,54 @@
       return true;
     }
 
+    function showPaymentPopup(){
+      const popup = document.getElementById('paymentPopup');
+      if(!popup) return;
+
+      popup.classList.add('show');
+
+      clearTimeout(window.paymentPopupTimer);
+      window.paymentPopupTimer = setTimeout(() => {
+        popup.classList.remove('show');
+      }, 3500);
+    }
+
+    function handlePaymentMethodChange(){
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const warningBox = document.getElementById('paymentWarning');
+      const orderButtons = document.querySelectorAll('.checkout.whatsapp, .checkout.website');
+
+      if(paymentMethod !== 'Cash on Delivery'){
+        warningBox.classList.add('show');
+        orderButtons.forEach(btn => btn.classList.add('blocked'));
+      }else{
+        warningBox.classList.remove('show');
+        orderButtons.forEach(btn => btn.classList.remove('blocked'));
+      }
+    }
+
+    function isPaymentAvailable(){
+      const paymentMethod = document.getElementById('paymentMethod').value;
+
+      if(paymentMethod !== 'Cash on Delivery'){
+        handlePaymentMethodChange();
+
+        document.getElementById('paymentMethod').scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+
+        showPaymentPopup();
+        return false;
+      }
+
+      return true;
+    }
+
     function checkoutWhatsApp(){
+      if(!isPaymentAvailable()) return;
       if(!validateOrder()) return;
+
       const orderId = generateOrderId();
       const orderDateTime = getOrderDateTime();
       const name = document.getElementById('customerName').value.trim();
@@ -482,6 +544,7 @@
     }
 
     async function submitWebsiteOrder(){
+      if(!isPaymentAvailable()) return;
       if(!validateOrder()) return;
 
       const submitBtn = document.querySelector('.checkout.website');
@@ -543,5 +606,6 @@
     document.getElementById('waQuick').href = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello, I want to know about your three piece collection.`;
     renderProducts();
     updateCartCount();
+    handlePaymentMethodChange();
   </script></body>
 </html>
