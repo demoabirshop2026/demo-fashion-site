@@ -54,6 +54,7 @@
     .track-head b{font-size:16px}
     .status-pill{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#fff3cd;color:#8a5a00;border:1px solid rgba(138,90,0,.18)}
     .status-accepted,.status-confirmed{background:#eafff1;color:#198754;border-color:rgba(25,135,84,.22)}
+    .status-processing{background:#efe8ff;color:#5b2cc7;border-color:rgba(91,44,199,.22)}
     .status-cancelled{background:#fff1f1;color:#ad3434;border-color:rgba(173,52,52,.25)}
     .status-delivered{background:#eef6ff;color:#0b5ed7;border-color:rgba(11,94,215,.18)}
     .track-grid{display:grid;gap:8px}
@@ -61,6 +62,12 @@
     .track-row span{color:var(--muted)}
     .track-row b{text-align:right;word-break:break-word}
     .track-items{white-space:pre-wrap;line-height:1.7;font-size:13px;background:var(--bg);border-radius:14px;padding:10px;margin-top:8px;color:var(--dark)}
+    .cancel-panel{margin-top:12px;background:#fff1f1;border:1px solid rgba(173,52,52,.25);border-radius:18px;padding:13px;color:#7d1d1d}
+    .cancel-panel h4{font-size:15px;margin-bottom:6px;color:#9b1c1c}
+    .cancel-panel p{font-size:12px;line-height:1.6;color:#9b1c1c;margin-bottom:10px}
+    .cancel-panel textarea{width:100%;border:1px solid rgba(173,52,52,.28);background:#fff;border-radius:14px;padding:11px;outline:none;resize:vertical;min-height:65px;font-family:inherit;margin-bottom:9px}
+    .cancel-btn{border:0;border-radius:16px;padding:12px 14px;background:var(--danger);color:#fff;font-weight:800;cursor:pointer;width:100%}
+    .cancel-info{margin-top:12px;background:#f7f2ea;border:1px solid rgba(201,151,75,.20);border-radius:16px;padding:11px;font-size:12px;line-height:1.6;color:var(--muted)}
     .bottom-nav{position:fixed;left:12px;right:12px;bottom:12px;z-index:22;background:rgba(25,16,13,.94);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;box-shadow:0 15px 40px rgba(25,16,13,.28);backdrop-filter:blur(12px)}
     .bottom-nav a,.bottom-nav button{border:0;text-decoration:none;text-align:center;border-radius:18px;padding:12px 8px;font-weight:800;font-size:12px;cursor:pointer}.bottom-nav a{background:linear-gradient(135deg,#25d366,#1da851);color:white}.bottom-nav button{background:#fff;color:var(--dark)}
     .modal{position:fixed;inset:0;background:rgba(25,16,13,.55);z-index:50;display:none;align-items:flex-end;justify-content:center;padding:12px}.modal.show{display:flex}.sheet{background:#fff;width:min(560px,100%);max-height:92vh;overflow:auto;border-radius:28px;padding:15px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
@@ -147,7 +154,7 @@
 
   <section class="tracking" id="trackOrder">
     <h3>অর্ডার ট্র্যাক করুন</h3>
-    <p>আপনার Order ID লিখে অর্ডারের বর্তমান অবস্থা দেখুন। যেমন: Pending, Accepted, Cancelled বা Delivered।</p>
+    <p>আপনার Order ID লিখে অর্ডারের বর্তমান অবস্থা দেখুন। Pending থাকলে এখান থেকেই অর্ডার ক্যান্সেল করা যাবে।</p>
     <div class="track-form">
       <input id="trackOrderInput" type="text" placeholder="Order ID লিখুন, যেমন 297101">
       <button onclick="trackOrder()">Track Order</button>
@@ -244,78 +251,12 @@
     const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwFamamhfmI9XfydI16raK44op1yhow8Qg52EktDnDh4mjnHq3JeB3aqkU7HR84EwMr0g/exec';
 
     const products = [
-      {
-        id: 1,
-        name: 'Royal Cotton Three Piece',
-        code: 'MANHA-101',
-        price: 1490,
-        oldPrice: 1850,
-        category: 'cotton',
-        badge: 'Best Seller',
-        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80',
-        desc: 'সিম্পল কিন্তু প্রিমিয়াম লুকের কটন থ্রি-পিস। দৈনন্দিন ব্যবহার এবং ছোট অনুষ্ঠানের জন্য পারফেক্ট।',
-        info: 'Fabric: Cotton Blend • Size: Free Size • Dupatta Included • Delivery: 2-4 Days'
-      },
-      {
-        id: 2,
-        name: 'Elegant Lawn Collection',
-        code: 'MANHA-102',
-        price: 1690,
-        oldPrice: 2100,
-        category: 'lawn',
-        badge: 'New',
-        image: 'https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?auto=format&fit=crop&w=900&q=80',
-        desc: 'হালকা, আরামদায়ক এবং স্টাইলিশ লন থ্রি-পিস। গরমের জন্য খুব ভালো।',
-        info: 'Fabric: Lawn • Work: Printed • Color: Soft Pastel • COD Available'
-      },
-      {
-        id: 3,
-        name: 'Premium Embroidery Suit',
-        code: 'MANHA-103',
-        price: 2290,
-        oldPrice: 2750,
-        category: 'embroidery',
-        badge: 'Premium',
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=900&q=80',
-        desc: 'এমব্রয়ডারি কাজের প্রিমিয়াম থ্রি-পিস। গিফট বা পার্টি ওয়্যারের জন্য সুন্দর চয়েস।',
-        info: 'Fabric: Soft Silk Mix • Work: Embroidery • Occasion: Party/Eid'
-      },
-      {
-        id: 4,
-        name: 'Dubai Style Modest Wear',
-        code: 'MANHA-104',
-        price: 1990,
-        oldPrice: 2450,
-        category: 'premium',
-        badge: 'Hot',
-        image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=80',
-        desc: 'মডেস্ট এবং এলিগেন্ট লুক। যারা সিম্পল কিন্তু ক্লাসি ডিজাইন পছন্দ করেন তাদের জন্য।',
-        info: 'Style: Dubai Inspired • Comfortable Fit • Limited Stock'
-      },
-      {
-        id: 5,
-        name: 'Soft Printed Cotton Set',
-        code: 'MANHA-105',
-        price: 1290,
-        oldPrice: 1590,
-        category: 'cotton',
-        badge: 'Budget',
-        image: 'https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?auto=format&fit=crop&w=900&q=80',
-        desc: 'কম দামে সুন্দর লুকের প্রিন্টেড কটন সেট। শুরুতে অনলাইন সেলের জন্য ভালো আইটেম।',
-        info: 'Fabric: Cotton • Type: Printed • Price Friendly'
-      },
-      {
-        id: 6,
-        name: 'Signature Luxury Three Piece',
-        code: 'MANHA-106',
-        price: 2590,
-        oldPrice: 3150,
-        category: 'premium',
-        badge: 'Limited',
-        image: 'https://images.unsplash.com/photo-1612722432474-b971cdcea546?auto=format&fit=crop&w=900&q=80',
-        desc: 'লাক্সারি ফিনিশিং, সুন্দর কালার কম্বিনেশন এবং প্রিমিয়াম প্রেজেন্টেশনের জন্য ডেমো আইটেম।',
-        info: 'Fabric: Premium Mix • Finish: Luxury • Best For Gift'
-      }
+      {id:1,name:'Royal Cotton Three Piece',code:'MANHA-101',price:1490,oldPrice:1850,category:'cotton',badge:'Best Seller',image:'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=80',desc:'সিম্পল কিন্তু প্রিমিয়াম লুকের কটন থ্রি-পিস। দৈনন্দিন ব্যবহার এবং ছোট অনুষ্ঠানের জন্য পারফেক্ট।',info:'Fabric: Cotton Blend • Size: Free Size • Dupatta Included • Delivery: 2-4 Days'},
+      {id:2,name:'Elegant Lawn Collection',code:'MANHA-102',price:1690,oldPrice:2100,category:'lawn',badge:'New',image:'https://images.unsplash.com/photo-1622122201714-77da0ca8e5d2?auto=format&fit=crop&w=900&q=80',desc:'হালকা, আরামদায়ক এবং স্টাইলিশ লন থ্রি-পিস। গরমের জন্য খুব ভালো।',info:'Fabric: Lawn • Work: Printed • Color: Soft Pastel • COD Available'},
+      {id:3,name:'Premium Embroidery Suit',code:'MANHA-103',price:2290,oldPrice:2750,category:'embroidery',badge:'Premium',image:'https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=900&q=80',desc:'এমব্রয়ডারি কাজের প্রিমিয়াম থ্রি-পিস। গিফট বা পার্টি ওয়্যারের জন্য সুন্দর চয়েস।',info:'Fabric: Soft Silk Mix • Work: Embroidery • Occasion: Party/Eid'},
+      {id:4,name:'Dubai Style Modest Wear',code:'MANHA-104',price:1990,oldPrice:2450,category:'premium',badge:'Hot',image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=80',desc:'মডেস্ট এবং এলিগেন্ট লুক। যারা সিম্পল কিন্তু ক্লাসি ডিজাইন পছন্দ করেন তাদের জন্য।',info:'Style: Dubai Inspired • Comfortable Fit • Limited Stock'},
+      {id:5,name:'Soft Printed Cotton Set',code:'MANHA-105',price:1290,oldPrice:1590,category:'cotton',badge:'Budget',image:'https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?auto=format&fit=crop&w=900&q=80',desc:'কম দামে সুন্দর লুকের প্রিন্টেড কটন সেট। শুরুতে অনলাইন সেলের জন্য ভালো আইটেম।',info:'Fabric: Cotton • Type: Printed • Price Friendly'},
+      {id:6,name:'Signature Luxury Three Piece',code:'MANHA-106',price:2590,oldPrice:3150,category:'premium',badge:'Limited',image:'https://images.unsplash.com/photo-1612722432474-b971cdcea546?auto=format&fit=crop&w=900&q=80',desc:'লাক্সারি ফিনিশিং, সুন্দর কালার কম্বিনেশন এবং প্রিমিয়াম প্রেজেন্টেশনের জন্য ডেমো আইটেম।',info:'Fabric: Premium Mix • Finish: Luxury • Best For Gift'}
     ];
 
     let cart = [];
@@ -326,41 +267,24 @@
       const select = document.getElementById('deliveryArea');
       if(!select) return {area:'ঢাকার ভিতরে', charge:70};
       const selected = select.options[select.selectedIndex];
-      return {
-        area: selected.textContent.replace(/—.*/, '').trim(),
-        charge: Number(selected.dataset.charge || 0)
-      };
+      return {area: selected.textContent.replace(/—.*/, '').trim(), charge: Number(selected.dataset.charge || 0)};
     }
 
     function getSubtotal(){return cart.reduce((sum,i)=>sum + i.price * i.qty, 0)}
     function getGrandTotal(){return getSubtotal() + getDeliveryInfo().charge}
-
-    function generateOrderId(){
-      return String(Math.floor(100000 + Math.random() * 900000));
-    }
+    function generateOrderId(){return String(Math.floor(100000 + Math.random() * 900000));}
 
     function getOrderDateTime(){
-      return new Date().toLocaleString('bn-BD', {
-        timeZone: 'Asia/Dhaka',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      });
+      return new Date().toLocaleString('bn-BD', {timeZone:'Asia/Dhaka',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
     }
 
     function clearOrderForm(){
-      cart = [];
-      updateCartCount();
-      renderCart();
-      document.getElementById('customerName').value = '';
-      document.getElementById('customerPhone').value = '';
-      document.getElementById('customerAddress').value = '';
-      document.getElementById('customerNote').value = '';
-      document.getElementById('paymentMethod').value = 'Cash on Delivery';
+      cart=[];updateCartCount();renderCart();
+      document.getElementById('customerName').value='';
+      document.getElementById('customerPhone').value='';
+      document.getElementById('customerAddress').value='';
+      document.getElementById('customerNote').value='';
+      document.getElementById('paymentMethod').value='Cash on Delivery';
       document.getElementById('paymentWarning').classList.remove('show');
       document.getElementById('paymentPopup').classList.remove('show');
       handlePaymentMethodChange();
@@ -371,21 +295,16 @@
     }
 
     function renderProducts(){
-      const grid = document.getElementById('productGrid');
-      const q = document.getElementById('searchInput').value.toLowerCase().trim();
-      const cat = document.getElementById('categoryFilter').value;
-      const filtered = products.filter(p => {
-        const matchText = (p.name + ' ' + p.code + ' ' + p.category + ' ' + p.desc).toLowerCase().includes(q);
-        const matchCat = cat === 'all' || p.category === cat;
-        return matchText && matchCat;
+      const grid=document.getElementById('productGrid');
+      const q=document.getElementById('searchInput').value.toLowerCase().trim();
+      const cat=document.getElementById('categoryFilter').value;
+      const filtered=products.filter(p=>{
+        const matchText=(p.name+' '+p.code+' '+p.category+' '+p.desc).toLowerCase().includes(q);
+        const matchCat=cat==='all'||p.category===cat;
+        return matchText&&matchCat;
       });
-
-      if(!filtered.length){
-        grid.innerHTML = '<div class="empty">কোনো প্রোডাক্ট পাওয়া যায়নি। অন্য কিছু লিখে সার্চ করো।</div>';
-        return;
-      }
-
-      grid.innerHTML = filtered.map(p => `
+      if(!filtered.length){grid.innerHTML='<div class="empty">কোনো প্রোডাক্ট পাওয়া যায়নি। অন্য কিছু লিখে সার্চ করো।</div>';return;}
+      grid.innerHTML=filtered.map(p=>`
         <article class="product-card">
           <span class="badge">${p.badge}</span>
           <img src="${p.image}" alt="${p.name}">
@@ -398,333 +317,227 @@
               <button class="mini gold" onclick="addToCart(${p.id})">Add</button>
             </div>
           </div>
-        </article>
-      `).join('');
+        </article>`).join('');
     }
 
     function openDetail(id){
-      const p = products.find(x => x.id === id);
-      document.getElementById('detailTitle').textContent = p.name;
-      document.getElementById('detailImage').src = p.image;
-      document.getElementById('detailCode').textContent = 'Code: ' + p.code;
-      document.getElementById('detailPrice').textContent = money(p.price);
-      document.getElementById('detailDesc').textContent = p.desc;
-      document.getElementById('detailInfo').textContent = p.info;
-      document.getElementById('detailAddBtn').onclick = () => addToCart(id);
-      document.getElementById('detailOrderBtn').href = singleProductWhatsApp(p);
+      const p=products.find(x=>x.id===id);
+      document.getElementById('detailTitle').textContent=p.name;
+      document.getElementById('detailImage').src=p.image;
+      document.getElementById('detailCode').textContent='Code: '+p.code;
+      document.getElementById('detailPrice').textContent=money(p.price);
+      document.getElementById('detailDesc').textContent=p.desc;
+      document.getElementById('detailInfo').textContent=p.info;
+      document.getElementById('detailAddBtn').onclick=()=>addToCart(id);
+      document.getElementById('detailOrderBtn').href=singleProductWhatsApp(p);
       document.getElementById('detailModal').classList.add('show');
     }
 
     function closeModal(id){document.getElementById(id).classList.remove('show')}
 
     function addToCart(id){
-      const existing = cart.find(i => i.id === id);
-      if(existing){ existing.qty += 1; }
-      else {
-        const p = products.find(x => x.id === id);
-        cart.push({...p, qty: 1});
-      }
-      updateCartCount();
-      renderCart();
+      const existing=cart.find(i=>i.id===id);
+      if(existing){existing.qty+=1;} else {const p=products.find(x=>x.id===id);cart.push({...p,qty:1});}
+      updateCartCount();renderCart();
     }
 
-    function updateCartCount(){
-      document.getElementById('cartCount').textContent = cart.reduce((sum,i)=>sum+i.qty,0);
-    }
-
-    function openCart(){
-      renderCart();
-      handlePaymentMethodChange();
-      document.getElementById('cartModal').classList.add('show');
-    }
+    function updateCartCount(){document.getElementById('cartCount').textContent=cart.reduce((sum,i)=>sum+i.qty,0);}
+    function openCart(){renderCart();handlePaymentMethodChange();document.getElementById('cartModal').classList.add('show');}
 
     function changeQty(id,delta){
-      const item = cart.find(i => i.id === id);
-      if(!item) return;
-      item.qty += delta;
-      if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
-      updateCartCount();
-      renderCart();
+      const item=cart.find(i=>i.id===id);if(!item)return;
+      item.qty+=delta;if(item.qty<=0)cart=cart.filter(i=>i.id!==id);
+      updateCartCount();renderCart();
     }
 
-    function removeItem(id){
-      cart = cart.filter(i => i.id !== id);
-      updateCartCount();
-      renderCart();
-    }
+    function removeItem(id){cart=cart.filter(i=>i.id!==id);updateCartCount();renderCart();}
 
     function renderCart(){
-      const wrap = document.getElementById('cartItems');
-      const subtotalEl = document.getElementById('cartSubtotal');
-      const deliveryEl = document.getElementById('deliveryCharge');
-      const totalEl = document.getElementById('cartTotal');
-      const subtotal = getSubtotal();
-      const delivery = getDeliveryInfo();
-      const grandTotal = subtotal + delivery.charge;
-
+      const wrap=document.getElementById('cartItems');
+      const subtotalEl=document.getElementById('cartSubtotal');
+      const deliveryEl=document.getElementById('deliveryCharge');
+      const totalEl=document.getElementById('cartTotal');
+      const subtotal=getSubtotal();
+      const delivery=getDeliveryInfo();
+      const grandTotal=subtotal+delivery.charge;
       if(!cart.length){
-        wrap.innerHTML = '<div class="empty">কার্টে এখনো কোনো প্রোডাক্ট নেই।</div>';
-        subtotalEl.textContent = money(0);
-        deliveryEl.textContent = money(delivery.charge);
-        totalEl.textContent = money(0);
-        return;
+        wrap.innerHTML='<div class="empty">কার্টে এখনো কোনো প্রোডাক্ট নেই।</div>';
+        subtotalEl.textContent=money(0);deliveryEl.textContent=money(delivery.charge);totalEl.textContent=money(0);return;
       }
-
-      wrap.innerHTML = cart.map(i => `
+      wrap.innerHTML=cart.map(i=>`
         <div class="cart-item">
           <img src="${i.image}" alt="${i.name}">
-          <div>
-            <h4>${i.name}</h4>
-            <p>${i.code} • ${money(i.price)}</p>
-            <div class="qty">
-              <button onclick="changeQty(${i.id},-1)">-</button>
-              <b>${i.qty}</b>
-              <button onclick="changeQty(${i.id},1)">+</button>
-            </div>
+          <div><h4>${i.name}</h4><p>${i.code} • ${money(i.price)}</p>
+            <div class="qty"><button onclick="changeQty(${i.id},-1)">-</button><b>${i.qty}</b><button onclick="changeQty(${i.id},1)">+</button></div>
           </div>
           <button class="remove" onclick="removeItem(${i.id})">X</button>
-        </div>
-      `).join('');
-
-      subtotalEl.textContent = money(subtotal);
-      deliveryEl.textContent = money(delivery.charge);
-      totalEl.textContent = money(grandTotal);
+        </div>`).join('');
+      subtotalEl.textContent=money(subtotal);deliveryEl.textContent=money(delivery.charge);totalEl.textContent=money(grandTotal);
     }
 
     function singleProductWhatsApp(p){
-      const delivery = getDeliveryInfo();
-      const productTotal = p.price + delivery.charge;
-      const msg = `Hello, I want to order this product:%0A%0AProduct: ${p.name}%0ACode: ${p.code}%0APrice: ${money(p.price)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0ATotal: ${money(productTotal)}%0A%0APlease confirm availability.`;
+      const delivery=getDeliveryInfo();
+      const productTotal=p.price+delivery.charge;
+      const msg=`Hello, I want to order this product:%0A%0AProduct: ${p.name}%0ACode: ${p.code}%0APrice: ${money(p.price)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0ATotal: ${money(productTotal)}%0A%0APlease confirm availability.`;
       return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
     }
 
     function validateOrder(){
       if(!cart.length){alert('আগে কার্টে প্রোডাক্ট যোগ করুন');return false;}
-      const name = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
-      const address = document.getElementById('customerAddress').value.trim();
-      if(!name || !phone || !address){alert('নাম, মোবাইল নাম্বার এবং পূর্ণ ঠিকানা লিখুন');return false;}
+      const name=document.getElementById('customerName').value.trim();
+      const phone=document.getElementById('customerPhone').value.trim();
+      const address=document.getElementById('customerAddress').value.trim();
+      if(!name||!phone||!address){alert('নাম, মোবাইল নাম্বার এবং পূর্ণ ঠিকানা লিখুন');return false;}
       return true;
     }
 
     function showPaymentPopup(){
-      const popup = document.getElementById('paymentPopup');
-      if(!popup) return;
-
+      const popup=document.getElementById('paymentPopup');if(!popup)return;
       popup.classList.add('show');
-
       clearTimeout(window.paymentPopupTimer);
-      window.paymentPopupTimer = setTimeout(() => {
-        popup.classList.remove('show');
-      }, 3500);
+      window.paymentPopupTimer=setTimeout(()=>{popup.classList.remove('show');},3500);
     }
 
     function handlePaymentMethodChange(){
-      const paymentMethod = document.getElementById('paymentMethod').value;
-      const warningBox = document.getElementById('paymentWarning');
-      const orderButtons = document.querySelectorAll('.checkout.whatsapp, .checkout.website');
-
-      if(paymentMethod !== 'Cash on Delivery'){
-        warningBox.classList.add('show');
-        orderButtons.forEach(btn => btn.classList.add('blocked'));
+      const paymentMethod=document.getElementById('paymentMethod').value;
+      const warningBox=document.getElementById('paymentWarning');
+      const orderButtons=document.querySelectorAll('.checkout.whatsapp, .checkout.website');
+      if(paymentMethod!=='Cash on Delivery'){
+        warningBox.classList.add('show');orderButtons.forEach(btn=>btn.classList.add('blocked'));
       }else{
-        warningBox.classList.remove('show');
-        orderButtons.forEach(btn => btn.classList.remove('blocked'));
+        warningBox.classList.remove('show');orderButtons.forEach(btn=>btn.classList.remove('blocked'));
       }
     }
 
     function isPaymentAvailable(){
-      const paymentMethod = document.getElementById('paymentMethod').value;
-
-      if(paymentMethod !== 'Cash on Delivery'){
+      const paymentMethod=document.getElementById('paymentMethod').value;
+      if(paymentMethod!=='Cash on Delivery'){
         handlePaymentMethodChange();
-
-        document.getElementById('paymentMethod').scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-
-        showPaymentPopup();
-        return false;
+        document.getElementById('paymentMethod').scrollIntoView({behavior:'smooth',block:'center'});
+        showPaymentPopup();return false;
       }
-
       return true;
     }
 
     function checkoutWhatsApp(){
-      if(!isPaymentAvailable()) return;
-      if(!validateOrder()) return;
-
-      const orderId = generateOrderId();
-      const orderDateTime = getOrderDateTime();
-      const name = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
-      const address = document.getElementById('customerAddress').value.trim();
-      const paymentMethod = document.getElementById('paymentMethod').value;
-      const customerNote = document.getElementById('customerNote').value.trim() || 'N/A';
-      const delivery = getDeliveryInfo();
-      const subtotal = getSubtotal();
-      const grandTotal = subtotal + delivery.charge;
-      const items = getOrderItemsText('%0A');
-
-      const msg = `Assalamu Alaikum, I want to place an order.%0A%0AOrder ID: ${orderId}%0AOrder Time: ${orderDateTime}%0A%0A${items}%0A%0AProduct Total: ${money(subtotal)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0AGrand Total: ${money(grandTotal)}%0APayment Method: ${paymentMethod}%0ACustomer Note: ${customerNote}%0A%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0APlease confirm delivery charge and availability.`;
-
+      if(!isPaymentAvailable())return;if(!validateOrder())return;
+      const orderId=generateOrderId();
+      const orderDateTime=getOrderDateTime();
+      const name=document.getElementById('customerName').value.trim();
+      const phone=document.getElementById('customerPhone').value.trim();
+      const address=document.getElementById('customerAddress').value.trim();
+      const paymentMethod=document.getElementById('paymentMethod').value;
+      const customerNote=document.getElementById('customerNote').value.trim()||'N/A';
+      const delivery=getDeliveryInfo();
+      const subtotal=getSubtotal();
+      const grandTotal=subtotal+delivery.charge;
+      const items=getOrderItemsText('%0A');
+      const msg=`Assalamu Alaikum, I want to place an order.%0A%0AOrder ID: ${orderId}%0AOrder Time: ${orderDateTime}%0A%0A${items}%0A%0AProduct Total: ${money(subtotal)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0AGrand Total: ${money(grandTotal)}%0APayment Method: ${paymentMethod}%0ACustomer Note: ${customerNote}%0A%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0APlease confirm delivery charge and availability.`;
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     }
 
-    function encode(data){
-      return Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
-    }
+    function encode(data){return Object.keys(data).map(key=>encodeURIComponent(key)+'='+encodeURIComponent(data[key])).join('&');}
 
     async function submitOrderToGoogleSheet(orderData){
-      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(orderData)
-      });
+      await fetch(GOOGLE_SHEET_WEB_APP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(orderData)});
     }
 
     async function submitWebsiteOrder(){
-      if(!isPaymentAvailable()) return;
-      if(!validateOrder()) return;
-
-      const submitBtn = document.querySelector('.checkout.website');
-      const successBox = document.getElementById('websiteOrderSuccess');
-
-      const orderId = generateOrderId();
-      const orderDateTime = getOrderDateTime();
-      const name = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
-      const address = document.getElementById('customerAddress').value.trim();
-      const paymentMethod = document.getElementById('paymentMethod').value;
-      const customerNote = document.getElementById('customerNote').value.trim() || 'N/A';
-      const delivery = getDeliveryInfo();
-      const subtotal = getSubtotal();
-      const grandTotal = subtotal + delivery.charge;
-
-      const orderData = {
-        'form-name': 'website-order',
-        order_id: orderId,
-        order_datetime: orderDateTime,
-        customer_name: name,
-        customer_phone: phone,
-        customer_address: address,
-        delivery_area: delivery.area,
-        delivery_charge: money(delivery.charge),
-        payment_method: paymentMethod,
-        customer_note: customerNote,
-        order_items: getOrderItemsText('\n'),
-        subtotal: money(subtotal),
-        grand_total: money(grandTotal),
-        order_status: 'Pending',
-        admin_note: ''
-      };
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'সাবমিট হচ্ছে...';
-      successBox.classList.remove('show');
-
+      if(!isPaymentAvailable())return;if(!validateOrder())return;
+      const submitBtn=document.querySelector('.checkout.website');
+      const successBox=document.getElementById('websiteOrderSuccess');
+      const orderId=generateOrderId();
+      const orderDateTime=getOrderDateTime();
+      const name=document.getElementById('customerName').value.trim();
+      const phone=document.getElementById('customerPhone').value.trim();
+      const address=document.getElementById('customerAddress').value.trim();
+      const paymentMethod=document.getElementById('paymentMethod').value;
+      const customerNote=document.getElementById('customerNote').value.trim()||'N/A';
+      const delivery=getDeliveryInfo();
+      const subtotal=getSubtotal();
+      const grandTotal=subtotal+delivery.charge;
+      const orderData={'form-name':'website-order',order_id:orderId,order_datetime:orderDateTime,customer_name:name,customer_phone:phone,customer_address:address,delivery_area:delivery.area,delivery_charge:money(delivery.charge),payment_method:paymentMethod,customer_note:customerNote,order_items:getOrderItemsText('\n'),subtotal:money(subtotal),grand_total:money(grandTotal),order_status:'Pending',admin_note:''};
+      submitBtn.disabled=true;submitBtn.textContent='সাবমিট হচ্ছে...';successBox.classList.remove('show');
       try{
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encode(orderData)
-        });
-
+        const response=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(orderData)});
         if(!response.ok){throw new Error('Order submit failed');}
-
         await submitOrderToGoogleSheet(orderData);
-
-        successBox.textContent = `অর্ডার Website-এ সাবমিট হয়েছে। Order ID: ${orderId}`;
-        successBox.classList.add('show');
-        clearOrderForm();
+        successBox.textContent=`অর্ডার Website-এ সাবমিট হয়েছে। Order ID: ${orderId}`;
+        successBox.classList.add('show');clearOrderForm();
       }catch(error){
         alert('অর্ডার সাবমিট হয়নি। ইন্টারনেট/Netlify Forms/Google Sheet সেটিং চেক করে আবার চেষ্টা করুন।');
       }finally{
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Website এ অর্ডার সাবমিট করুন';
+        submitBtn.disabled=false;submitBtn.textContent='Website এ অর্ডার সাবমিট করুন';
       }
     }
 
     function escapeHTML(text){
-      return String(text || '').replace(/[&<>"']/g, function(match){
-        return {
-          '&':'&amp;',
-          '<':'&lt;',
-          '>':'&gt;',
-          '"':'&quot;',
-          "'":'&#039;'
-        }[match];
-      });
+      return String(text||'').replace(/[&<>"']/g,function(match){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[match];});
     }
 
     function getStatusClass(status){
-      const s = String(status || '').toLowerCase();
-      if(s.includes('accepted') || s.includes('confirmed') || s.includes('confirm')) return 'status-accepted';
-      if(s.includes('cancel')) return 'status-cancelled';
-      if(s.includes('deliver')) return 'status-delivered';
+      const s=String(status||'').toLowerCase();
+      if(s.includes('accepted')||s.includes('confirmed')||s.includes('confirm'))return 'status-accepted';
+      if(s.includes('process'))return 'status-processing';
+      if(s.includes('cancel'))return 'status-cancelled';
+      if(s.includes('deliver'))return 'status-delivered';
       return 'status-pending';
     }
 
-    function showTrackMessage(message, isError=false){
-      const box = document.getElementById('trackResult');
-      box.className = 'track-result show' + (isError ? ' error' : '');
-      box.innerHTML = escapeHTML(message);
+    function showTrackMessage(message,isError=false){
+      const box=document.getElementById('trackResult');
+      box.className='track-result show'+(isError?' error':'');
+      box.innerHTML=escapeHTML(message);
     }
 
-    function trackOrder(){
-      const input = document.getElementById('trackOrderInput');
-      const orderId = input.value.trim();
-
-      if(!orderId){
-        showTrackMessage('অনুগ্রহ করে আপনার Order ID লিখুন।', true);
-        return;
-      }
-
-      showTrackMessage('অর্ডার খোঁজা হচ্ছে...');
-
-      const callbackName = 'trackCallback_' + Date.now();
-      const script = document.createElement('script');
-
-      window[callbackName] = function(data){
-        try{
-          renderTrackResult(data);
-        }finally{
-          delete window[callbackName];
-          if(script && script.parentNode) script.parentNode.removeChild(script);
-        }
+    function jsonpRequest(params,onSuccess,onError){
+      const callbackName='jsonpCallback_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+      const script=document.createElement('script');
+      window[callbackName]=function(data){
+        try{onSuccess(data);}finally{delete window[callbackName];if(script&&script.parentNode)script.parentNode.removeChild(script);}
       };
-
-      script.onerror = function(){
-        showTrackMessage('Tracking data লোড হয়নি। ইন্টারনেট বা API link চেক করে আবার চেষ্টা করুন।', true);
-        delete window[callbackName];
-        if(script && script.parentNode) script.parentNode.removeChild(script);
+      script.onerror=function(){
+        delete window[callbackName];if(script&&script.parentNode)script.parentNode.removeChild(script);
+        if(onError)onError();
       };
-
-      script.src = GOOGLE_SHEET_WEB_APP_URL + '?action=track&order_id=' + encodeURIComponent(orderId) + '&callback=' + callbackName;
+      const query=new URLSearchParams({...params,callback:callbackName}).toString();
+      script.src=GOOGLE_SHEET_WEB_APP_URL+'?'+query;
       document.body.appendChild(script);
     }
 
+    function trackOrder(){
+      const input=document.getElementById('trackOrderInput');
+      const orderId=input.value.trim();
+      if(!orderId){showTrackMessage('অনুগ্রহ করে আপনার Order ID লিখুন।',true);return;}
+      showTrackMessage('অর্ডার খোঁজা হচ্ছে...');
+      jsonpRequest({action:'track',order_id:orderId},renderTrackResult,function(){showTrackMessage('Tracking data লোড হয়নি। ইন্টারনেট বা API link চেক করে আবার চেষ্টা করুন।',true);});
+    }
+
     function renderTrackResult(data){
-      const box = document.getElementById('trackResult');
-
-      if(!data || data.result === 'error'){
-        showTrackMessage(data && data.message ? data.message : 'Tracking করতে সমস্যা হয়েছে।', true);
-        return;
+      const box=document.getElementById('trackResult');
+      if(!data||data.result==='error'){
+        showTrackMessage(data&&data.message?data.message:'Tracking করতে সমস্যা হয়েছে।',true);return;
       }
-
-      if(data.result === 'not_found'){
-        showTrackMessage(data.message || 'এই Order ID দিয়ে কোনো অর্ডার পাওয়া যায়নি।', true);
-        return;
+      if(data.result==='not_found'){
+        showTrackMessage(data.message||'এই Order ID দিয়ে কোনো অর্ডার পাওয়া যায়নি।',true);return;
       }
-
-      const o = data.order || {};
-      const status = o.order_status || 'Pending';
-      const statusClass = getStatusClass(status);
-
-      box.className = 'track-result show';
-      box.innerHTML = `
+      const o=data.order||{};
+      const status=o.order_status||'Pending';
+      const statusClass=getStatusClass(status);
+      const isPending=String(status).toLowerCase()==='pending';
+      const orderIdEncoded=encodeURIComponent(o.order_id||'');
+      const cancelBlock=isPending?`
+        <div class="cancel-panel" id="cancelPanel_${escapeHTML(o.order_id)}">
+          <h4>Pending Order Cancel</h4>
+          <p>এই অর্ডারটি এখনও Pending আছে। Admin accept করার আগে চাইলে আপনি অর্ডারটি cancel করতে পারবেন।</p>
+          <textarea id="cancelReason_${escapeHTML(o.order_id)}" placeholder="ক্যান্সেল করার কারণ লিখুন (Optional)"></textarea>
+          <button class="cancel-btn" onclick="cancelPendingOrder('${orderIdEncoded}')">Cancel This Order</button>
+        </div>
+      `:`
+        <div class="cancel-info">এই অর্ডারটি এখন <b>${escapeHTML(status)}</b> অবস্থায় আছে, তাই customer side থেকে cancel করা যাবে না।</div>
+      `;
+      box.className='track-result show';
+      box.innerHTML=`
         <div class="track-head">
           <b>Order ID: ${escapeHTML(o.order_id)}</b>
           <span class="status-pill ${statusClass}">${escapeHTML(status)}</span>
@@ -738,17 +551,33 @@
           <div class="track-row"><span>Subtotal</span><b>${escapeHTML(o.subtotal)}</b></div>
           <div class="track-row"><span>Delivery Charge</span><b>${escapeHTML(o.delivery_charge)}</b></div>
           <div class="track-row"><span>Grand Total</span><b>${escapeHTML(o.grand_total)}</b></div>
-          <div class="track-row"><span>Admin Note</span><b>${escapeHTML(o.admin_note || 'N/A')}</b></div>
+          <div class="track-row"><span>Admin Note</span><b>${escapeHTML(o.admin_note||'N/A')}</b></div>
+          <div class="track-row"><span>Cancelled At</span><b>${escapeHTML(o.cancelled_at||'N/A')}</b></div>
         </div>
-        <div class="track-items">${escapeHTML(o.order_items || '')}</div>
+        <div class="track-items">${escapeHTML(o.order_items||'')}</div>
+        ${cancelBlock}
       `;
     }
 
-    document.querySelectorAll('.modal').forEach(m => {
-      m.addEventListener('click', e => { if(e.target === m) m.classList.remove('show'); });
-    });
+    function cancelPendingOrder(encodedOrderId){
+      const orderId=decodeURIComponent(encodedOrderId);
+      const reasonEl=document.getElementById('cancelReason_'+orderId);
+      const reason=reasonEl?reasonEl.value.trim():'';
+      const ok=confirm('আপনি কি নিশ্চিত এই Pending order cancel করতে চান?');
+      if(!ok)return;
+      showTrackMessage('অর্ডার ক্যান্সেল করা হচ্ছে...');
+      jsonpRequest({action:'customer_cancel',order_id:orderId,cancel_reason:reason},function(data){
+        if(!data||data.result!=='success'){
+          showTrackMessage(data&&data.message?data.message:'অর্ডার ক্যান্সেল করা যায়নি।',true);return;
+        }
+        renderTrackResult(data);
+      },function(){
+        showTrackMessage('Cancel request failed. Internet/API চেক করে আবার চেষ্টা করুন।',true);
+      });
+    }
 
-    document.getElementById('waQuick').href = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello, I want to know about your three piece collection.`;
+    document.querySelectorAll('.modal').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});});
+    document.getElementById('waQuick').href=`https://wa.me/${WHATSAPP_NUMBER}?text=Hello, I want to know about your three piece collection.`;
     renderProducts();
     updateCartCount();
     handlePaymentMethodChange();
