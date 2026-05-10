@@ -27,8 +27,12 @@
     .form textarea{min-height:82px;resize:vertical}
     .primary{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1c120e;font-weight:800;font-size:15px;cursor:pointer}
     .dark-btn{border:0;border-radius:18px;padding:14px;background:var(--dark);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+    .green-btn{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,#25d366,#1da851);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+    .danger-btn{border:0;border-radius:18px;padding:14px;background:var(--danger);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
     .error{display:none;background:#fff1f1;color:#9b1c1c;border:1px solid rgba(173,52,52,.28);border-radius:16px;padding:11px;font-size:13px;line-height:1.6}
     .error.show{display:block}
+    .success{display:none;background:#eafff1;color:#198754;border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:11px;font-size:13px;line-height:1.6;margin-bottom:12px}
+    .success.show{display:block}
     .hint{background:var(--bg);border:1px solid rgba(201,151,75,.15);border-radius:16px;padding:12px;font-size:13px;color:var(--muted);line-height:1.7;margin-top:12px}
     .admin{display:none;padding:16px 16px 90px}
     .admin.show{display:block}
@@ -45,15 +49,38 @@
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#fff3cd;color:#8a5a00;border:1px solid rgba(138,90,0,.18);margin-bottom:10px}
     .badge.green{background:#eafff1;color:#198754;border-color:rgba(25,135,84,.22)}
     .badge.red{background:#fff1f1;color:#ad3434;border-color:rgba(173,52,52,.25)}
+    .badge.dark{background:#19100d;color:#fff;border-color:#19100d}
     .disabled-btn{border:0;border-radius:18px;padding:13px;background:#e8e0d7;color:#9a8b82;font-weight:800;cursor:not-allowed}
     .row{display:grid;grid-template-columns:1fr;gap:10px}
     .quick-links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .quick-links a{text-decoration:none;text-align:center;border-radius:18px;padding:13px;font-weight:800;font-size:13px}
     .quick-links .site{background:var(--dark);color:white}
     .quick-links .sheet{background:linear-gradient(135deg,#25d366,#1da851);color:white}
+    .toolbar{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 14px}
+    .order-list{display:grid;gap:12px}
+    .order-card{background:var(--bg);border:1px solid rgba(201,151,75,.18);border-radius:22px;padding:14px}
+    .order-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+    .order-head h4{font-size:17px;font-weight:800;line-height:1.35}
+    .order-head small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .status-pill{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:1px solid rgba(0,0,0,.08)}
+    .status-pill.pending{background:#fff3cd;color:#8a5a00}
+    .status-pill.accepted{background:#e8f1ff;color:#0b5ed7}
+    .status-pill.processing{background:#efe8ff;color:#5b2cc7}
+    .status-pill.delivered{background:#eafff1;color:#198754}
+    .status-pill.cancelled{background:#fff1f1;color:#ad3434}
+    .order-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+    .mini-box{background:#fff;border:1px solid rgba(201,151,75,.13);border-radius:15px;padding:9px}
+    .mini-box span{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+    .mini-box b{font-size:13px;word-break:break-word}
+    .items{background:#fff;border:1px solid rgba(201,151,75,.13);border-radius:15px;padding:10px;font-size:13px;line-height:1.6;color:#3a2a23;margin:10px 0;white-space:pre-wrap}
+    .update-box{display:grid;gap:9px;margin-top:10px}
+    .update-box select,.update-box textarea{border:1px solid rgba(201,151,75,.25);background:#fff;border-radius:15px;padding:12px;outline:none;font-size:14px;width:100%}
+    .update-box textarea{min-height:72px;resize:vertical}
+    .empty{background:#fff;border:1px dashed rgba(201,151,75,.35);border-radius:18px;padding:18px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+    .loading{background:#fff;border:1px solid rgba(201,151,75,.15);border-radius:18px;padding:18px;text-align:center;color:var(--muted);font-size:13px}
     .footer-note{text-align:center;color:var(--muted);font-size:12px;line-height:1.6;margin-top:10px}
-    @media(min-width:760px){body{max-width:1000px;margin:auto}.cards{grid-template-columns:repeat(4,1fr)}.row{grid-template-columns:1fr 1fr}.admin{padding-left:20px;padding-right:20px}}
-    @media(max-width:370px){.cards{grid-template-columns:1fr}.quick-links{grid-template-columns:1fr}.welcome h2{font-size:22px}}
+    @media(min-width:760px){body{max-width:1000px;margin:auto}.cards{grid-template-columns:repeat(4,1fr)}.row{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr auto}.admin{padding-left:20px;padding-right:20px}.order-grid{grid-template-columns:repeat(4,1fr)}.update-box{grid-template-columns:220px 1fr auto;align-items:start}}
+    @media(max-width:370px){.cards{grid-template-columns:1fr}.quick-links{grid-template-columns:1fr}.welcome h2{font-size:22px}.order-grid{grid-template-columns:1fr}.order-head{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -85,7 +112,7 @@
         Demo Login:<br>
         Username: <b>admin</b><br>
         Password: <b>manha123</b><br><br>
-        নোট: এটা Step 3-এর simple login। পরে secure admin system করা যাবে।
+        নোট: এটা simple login। পরে secure admin system করা যাবে।
       </div>
     </div>
   </main>
@@ -93,20 +120,23 @@
   <main class="admin" id="adminDashboard">
     <section class="welcome">
       <h2>Welcome, Admin</h2>
-      <p>এখান থেকে ভবিষ্যতে order status update, cancel request, customer order history এবং product edit system manage করা যাবে।</p>
+      <p>এখান থেকে active order দেখা, urgent order lookup, status update এবং admin note manage করা যাবে।</p>
     </section>
 
     <section class="cards">
       <div class="card"><b>Step 3</b><span>Admin Login Done</span></div>
-      <div class="card"><b>Step 4</b><span>Status Update Next</span></div>
+      <div class="card"><b>Step 4</b><span>Order Management Active</span></div>
+      <div class="card"><b id="activeCountCard">0</b><span>Active Orders</span></div>
       <div class="card"><b>Step 5</b><span>Google Login Later</span></div>
-      <div class="card"><b>Step 6</b><span>Cancel System Later</span></div>
     </section>
 
+    <div class="success" id="globalMsg"></div>
+    <div class="error" id="globalError"></div>
+
     <section class="section">
-      <span class="badge green">Current Step 3</span>
+      <span class="badge green">Current Step 4</span>
       <h3>Admin Dashboard Layout</h3>
-      <p>এই dashboard এখন ready করা হলো। পরের Step 4-এ এখান থেকেই Order ID দিয়ে status update করা যাবে।</p>
+      <p>এখন admin panel থেকে active order দেখা এবং status update করা যাবে।</p>
       <div class="quick-links">
         <a class="site" href="index.html">Website দেখুন</a>
         <a class="sheet" href="https://docs.google.com/spreadsheets/d/1kmsbwyLEXvP5XzJUCrX2jlC_cZjniMO2wGw75lVOgcA/edit" target="_blank">Google Sheet</a>
@@ -114,21 +144,34 @@
     </section>
 
     <section class="section">
-      <span class="badge">Step 4 Placeholder</span>
-      <h3>Order Status Update</h3>
-      <p>পরের ধাপে এখানে Order ID লিখে status update করা হবে: Pending, Accepted, Cancelled, Delivered এবং Admin Note।</p>
-      <div class="form row">
-        <input type="text" placeholder="Order ID">
-        <select>
-          <option>Pending</option>
-          <option>Accepted</option>
-          <option>Cancelled</option>
-          <option>Delivered</option>
-        </select>
+      <span class="badge dark">Active Order Management</span>
+      <h3>Active Order Management</h3>
+      <p>Pending, Accepted এবং Processing order এখানে দেখা যাবে। Delivered/Cancelled হলে active list থেকে চলে যাবে।</p>
+
+      <div class="toolbar">
+        <div class="hint" style="margin-top:0">
+          Active Status: Pending → Accepted → Processing → Delivered
+        </div>
+        <button class="green-btn" onclick="loadActiveOrders()">Refresh Orders</button>
       </div>
-      <div class="form" style="margin-top:10px">
-        <textarea placeholder="Admin Note"></textarea>
-        <button class="disabled-btn" disabled>Step 4-এ চালু হবে</button>
+
+      <div id="activeOrdersList" class="order-list">
+        <div class="loading">Active orders loading...</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="badge">Quick Order Lookup & Update</span>
+      <h3>Quick Order Lookup & Update</h3>
+      <p>অনেক order-এর মধ্যে urgent কোনো order থাকলে Order ID দিয়ে দ্রুত খুঁজে update করা যাবে।</p>
+
+      <div class="form row">
+        <input id="quickOrderId" type="text" placeholder="Order ID লিখুন">
+        <button class="dark-btn" onclick="quickLookup()">Search Order</button>
+      </div>
+
+      <div id="quickResult" class="order-list" style="margin-top:12px">
+        <div class="empty">Order ID দিয়ে search করলে এখানে order details দেখা যাবে।</div>
       </div>
     </section>
 
@@ -142,29 +185,38 @@
     <section class="section">
       <span class="badge red">Step 6 Placeholder</span>
       <h3>Pending Order Cancel System</h3>
-      <p>Pending order customer চাইলে cancel করতে পারবে। Accepted/Confirmed হলে cancel করা যাবে না। Cancelled এবং Delivered order history-তে থাকবে।</p>
+      <p>Pending order customer চাইলে cancel করতে পারবে। Accepted/Processing/Delivered হলে cancel করা যাবে না। Cancelled এবং Delivered order history-তে থাকবে।</p>
       <button class="disabled-btn" disabled>Future: Cancel Request System</button>
     </section>
 
     <section class="section">
       <h3>Future Google Sheet Columns</h3>
-      <p>পরে Google Sheet-এ এই column গুলো ব্যবহার করা হবে:</p>
+      <p>Google Sheet-এ future-ready columns already backend থেকে support করা হচ্ছে:</p>
       <div class="hint">
         Customer Email<br>
         Login Type<br>
         Cancel Status<br>
+        Cancel Reason<br>
+        Cancel Requested At<br>
         Cancelled At<br>
         Accepted At<br>
-        Delivered At
+        Processing At<br>
+        Delivered At<br>
+        Updated At<br>
+        Last Updated By
       </div>
     </section>
 
-    <p class="footer-note">Manha Premium Collection Admin Panel — Step 3</p>
+    <p class="footer-note">Manha Premium Collection Admin Panel — Step 4</p>
   </main>
 
   <script>
     const ADMIN_USERNAME = 'admin';
     const ADMIN_PASSWORD = 'manha123';
+
+    const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwFamamhfmI9XfydI16raK44op1yhow8Qg52EktDnDh4mjnHq3JeB3aqkU7HR84EwMr0g/exec';
+
+    const STATUS_LIST = ['Pending', 'Accepted', 'Processing', 'Delivered', 'Cancelled'];
 
     function loginAdmin(){
       const user = document.getElementById('adminUser').value.trim();
@@ -184,6 +236,7 @@
       document.getElementById('loginWrap').style.display = 'none';
       document.getElementById('adminDashboard').classList.add('show');
       document.getElementById('logoutBtn').style.display = 'inline-block';
+      loadActiveOrders();
     }
 
     function logoutAdmin(){
@@ -198,6 +251,237 @@
     document.getElementById('adminPass').addEventListener('keydown', function(e){
       if(e.key === 'Enter') loginAdmin();
     });
+
+    document.getElementById('quickOrderId').addEventListener('keydown', function(e){
+      if(e.key === 'Enter') quickLookup();
+    });
+
+    function escapeHTML(value){
+      return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
+
+    function safeId(value){
+      return String(value || 'order').replace(/[^a-zA-Z0-9_-]/g, '_');
+    }
+
+    function showMessage(message){
+      const msg = document.getElementById('globalMsg');
+      const err = document.getElementById('globalError');
+      err.classList.remove('show');
+      msg.textContent = message;
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 4000);
+    }
+
+    function showError(message){
+      const msg = document.getElementById('globalMsg');
+      const err = document.getElementById('globalError');
+      msg.classList.remove('show');
+      err.textContent = message;
+      err.classList.add('show');
+      setTimeout(() => err.classList.remove('show'), 5000);
+    }
+
+    function apiRequest(params){
+      return new Promise((resolve, reject) => {
+        const callbackName = 'manhaCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        const query = new URLSearchParams({...params, callback: callbackName}).toString();
+        const script = document.createElement('script');
+        let timer;
+
+        window[callbackName] = function(data){
+          clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+          resolve(data);
+        };
+
+        script.onerror = function(){
+          clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+          reject(new Error('API request failed'));
+        };
+
+        timer = setTimeout(() => {
+          delete window[callbackName];
+          script.remove();
+          reject(new Error('Request timeout'));
+        }, 20000);
+
+        script.src = GOOGLE_SHEET_WEB_APP_URL + '?' + query;
+        document.body.appendChild(script);
+      });
+    }
+
+    function statusClass(status){
+      return String(status || 'Pending').toLowerCase();
+    }
+
+    function statusOptions(selected){
+      return STATUS_LIST.map(status => {
+        const isSelected = status === selected ? 'selected' : '';
+        return `<option value="${status}" ${isSelected}>${status}</option>`;
+      }).join('');
+    }
+
+    function valueOrNA(value){
+      const v = String(value || '').trim();
+      return v ? escapeHTML(v) : 'N/A';
+    }
+
+    function renderOrderCard(order, prefix){
+      const orderId = String(order.order_id || '').trim();
+      const key = prefix + '_' + safeId(orderId);
+      const encodedOrderId = encodeURIComponent(orderId);
+      const status = order.order_status || 'Pending';
+
+      return `
+        <div class="order-card">
+          <div class="order-head">
+            <div>
+              <h4>Order ID: ${valueOrNA(order.order_id)}</h4>
+              <small>Order Time: ${valueOrNA(order.order_datetime)}</small>
+            </div>
+            <span class="status-pill ${statusClass(status)}">${escapeHTML(status)}</span>
+          </div>
+
+          <div class="order-grid">
+            <div class="mini-box"><span>Customer</span><b>${valueOrNA(order.customer_name)}</b></div>
+            <div class="mini-box"><span>Phone</span><b>${valueOrNA(order.customer_phone)}</b></div>
+            <div class="mini-box"><span>Total</span><b>${valueOrNA(order.grand_total)}</b></div>
+            <div class="mini-box"><span>Delivery Area</span><b>${valueOrNA(order.delivery_area)}</b></div>
+          </div>
+
+          <div class="order-grid">
+            <div class="mini-box"><span>Payment</span><b>${valueOrNA(order.payment_method)}</b></div>
+            <div class="mini-box"><span>Subtotal</span><b>${valueOrNA(order.subtotal)}</b></div>
+            <div class="mini-box"><span>Delivery Charge</span><b>${valueOrNA(order.delivery_charge)}</b></div>
+            <div class="mini-box"><span>Updated By</span><b>${valueOrNA(order.last_updated_by)}</b></div>
+          </div>
+
+          <div class="items">${escapeHTML(order.order_items || 'No items found')}</div>
+
+          <div class="hint">
+            Admin Note: <b>${valueOrNA(order.admin_note)}</b><br>
+            Accepted At: ${valueOrNA(order.accepted_at)}<br>
+            Processing At: ${valueOrNA(order.processing_at)}<br>
+            Delivered At: ${valueOrNA(order.delivered_at)}<br>
+            Cancelled At: ${valueOrNA(order.cancelled_at)}
+          </div>
+
+          <div class="update-box">
+            <select id="status_${key}">
+              ${statusOptions(status)}
+            </select>
+            <textarea id="note_${key}" placeholder="Admin Note">${escapeHTML(order.admin_note || '')}</textarea>
+            <button class="primary" id="btn_${key}" onclick="updateOrderFromCard('${encodedOrderId}','${key}')">Update</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadActiveOrders(){
+      const wrap = document.getElementById('activeOrdersList');
+      const countCard = document.getElementById('activeCountCard');
+
+      wrap.innerHTML = '<div class="loading">Active orders loading...</div>';
+
+      try{
+        const data = await apiRequest({action:'active'});
+
+        if(data.result !== 'success'){
+          throw new Error(data.message || 'Active orders load failed');
+        }
+
+        countCard.textContent = data.total || 0;
+
+        if(!data.orders || !data.orders.length){
+          wrap.innerHTML = '<div class="empty">এখন কোনো active order নেই। Pending / Accepted / Processing order এলে এখানে দেখাবে।</div>';
+          return;
+        }
+
+        wrap.innerHTML = data.orders.map(order => renderOrderCard(order, 'active')).join('');
+      }catch(error){
+        wrap.innerHTML = '<div class="empty">Active orders load হয়নি। API/ইন্টারনেট চেক করে আবার Refresh চাপুন।</div>';
+        showError(error.message);
+      }
+    }
+
+    async function quickLookup(){
+      const orderId = document.getElementById('quickOrderId').value.trim();
+      const wrap = document.getElementById('quickResult');
+
+      if(!orderId){
+        showError('Order ID লিখুন।');
+        return;
+      }
+
+      wrap.innerHTML = '<div class="loading">Order searching...</div>';
+
+      try{
+        const data = await apiRequest({action:'lookup', order_id: orderId});
+
+        if(data.result === 'success'){
+          wrap.innerHTML = renderOrderCard(data.order, 'quick');
+        }else{
+          wrap.innerHTML = `<div class="empty">${escapeHTML(data.message || 'Order পাওয়া যায়নি।')}</div>`;
+        }
+      }catch(error){
+        wrap.innerHTML = '<div class="empty">Order search হয়নি। API/ইন্টারনেট চেক করে আবার চেষ্টা করুন।</div>';
+        showError(error.message);
+      }
+    }
+
+    async function updateOrderFromCard(encodedOrderId, key){
+      const orderId = decodeURIComponent(encodedOrderId);
+      const statusEl = document.getElementById('status_' + key);
+      const noteEl = document.getElementById('note_' + key);
+      const btn = document.getElementById('btn_' + key);
+
+      if(!orderId || !statusEl || !noteEl){
+        showError('Order update data missing.');
+        return;
+      }
+
+      const status = statusEl.value;
+      const adminNote = noteEl.value.trim();
+
+      btn.disabled = true;
+      btn.textContent = 'Updating...';
+
+      try{
+        const data = await apiRequest({
+          action: 'update',
+          order_id: orderId,
+          status: status,
+          admin_note: adminNote,
+          updated_by: 'Admin'
+        });
+
+        if(data.result !== 'success'){
+          throw new Error(data.message || 'Update failed');
+        }
+
+        showMessage('Order status updated successfully.');
+
+        if(key.startsWith('quick_')){
+          document.getElementById('quickResult').innerHTML = renderOrderCard(data.order, 'quick');
+        }
+
+        loadActiveOrders();
+      }catch(error){
+        showError(error.message);
+      }finally{
+        btn.disabled = false;
+        btn.textContent = 'Update';
+      }
+    }
 
     if(localStorage.getItem('manha_admin_login') === 'yes'){
       showDashboard();
