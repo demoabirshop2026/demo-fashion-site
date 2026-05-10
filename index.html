@@ -75,6 +75,8 @@
     <textarea name="order_items"></textarea>
     <input type="text" name="subtotal">
     <input type="text" name="grand_total">
+    <input type="text" name="order_status">
+    <textarea name="admin_note"></textarea>
   </form>
 
   <header class="topbar">
@@ -209,6 +211,7 @@
 
   <script>
     const WHATSAPP_NUMBER = '8801746785447';
+    const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwFamamhfmI9XfydI16raK44op1yhow8Qg52EktDnDh4mjnHq3JeB3aqkU7HR84EwMr0g/exec';
 
     const products = [
       {
@@ -543,6 +546,15 @@
       return Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
     }
 
+    async function submitOrderToGoogleSheet(orderData){
+      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode(orderData)
+      });
+    }
+
     async function submitWebsiteOrder(){
       if(!isPaymentAvailable()) return;
       if(!validateOrder()) return;
@@ -561,6 +573,24 @@
       const subtotal = getSubtotal();
       const grandTotal = subtotal + delivery.charge;
 
+      const orderData = {
+        'form-name': 'website-order',
+        order_id: orderId,
+        order_datetime: orderDateTime,
+        customer_name: name,
+        customer_phone: phone,
+        customer_address: address,
+        delivery_area: delivery.area,
+        delivery_charge: money(delivery.charge),
+        payment_method: paymentMethod,
+        customer_note: customerNote,
+        order_items: getOrderItemsText('\n'),
+        subtotal: money(subtotal),
+        grand_total: money(grandTotal),
+        order_status: 'Pending',
+        admin_note: ''
+      };
+
       submitBtn.disabled = true;
       submitBtn.textContent = 'সাবমিট হচ্ছে...';
       successBox.classList.remove('show');
@@ -569,30 +599,18 @@
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encode({
-            'form-name': 'website-order',
-            order_id: orderId,
-            order_datetime: orderDateTime,
-            customer_name: name,
-            customer_phone: phone,
-            customer_address: address,
-            delivery_area: delivery.area,
-            delivery_charge: money(delivery.charge),
-            payment_method: paymentMethod,
-            customer_note: customerNote,
-            order_items: getOrderItemsText('\n'),
-            subtotal: money(subtotal),
-            grand_total: money(grandTotal)
-          })
+          body: encode(orderData)
         });
 
         if(!response.ok){throw new Error('Order submit failed');}
+
+        await submitOrderToGoogleSheet(orderData);
 
         successBox.textContent = `অর্ডার Website-এ সাবমিট হয়েছে। Order ID: ${orderId}`;
         successBox.classList.add('show');
         clearOrderForm();
       }catch(error){
-        alert('অর্ডার সাবমিট হয়নি। ইন্টারনেট/Netlify Forms সেটিং চেক করে আবার চেষ্টা করুন।');
+        alert('অর্ডার সাবমিট হয়নি। ইন্টারনেট/Netlify Forms/Google Sheet সেটিং চেক করে আবার চেষ্টা করুন।');
       }finally{
         submitBtn.disabled = false;
         submitBtn.textContent = 'Website এ অর্ডার সাবমিট করুন';
