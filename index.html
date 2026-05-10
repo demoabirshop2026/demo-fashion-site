@@ -41,10 +41,28 @@
     .info{padding:12px}.info h4{font-size:14px;line-height:1.35;margin-bottom:5px}.code{font-size:11px;color:var(--muted);margin-bottom:8px}.price{display:flex;align-items:center;gap:7px;margin-bottom:11px}.price b{font-size:16px}.price del{font-size:12px;color:#9d8d86}
     .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini{border:0;border-radius:13px;padding:9px 6px;font-size:12px;font-weight:800;cursor:pointer}.mini.dark{background:var(--dark);color:white}.mini.gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#19100d}
     .empty{grid-column:1/-1;background:#fff;border:1px dashed rgba(201,151,75,.4);border-radius:20px;padding:25px;text-align:center;color:var(--muted)}
-    .about{margin:6px 16px 18px;background:#fff;border-radius:24px;padding:18px;border:1px solid rgba(201,151,75,.14);box-shadow:0 10px 24px rgba(25,16,13,.06)}
-    .about h3{font-size:20px;margin-bottom:8px}.about p{font-size:14px;color:var(--muted);line-height:1.75}.about ul{margin-top:10px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.8}
-    .bottom-nav{position:fixed;left:12px;right:12px;bottom:12px;z-index:22;background:rgba(25,16,13,.94);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;box-shadow:0 15px 40px rgba(25,16,13,.28);backdrop-filter:blur(12px)}
-    .bottom-nav a,.bottom-nav button{border:0;text-decoration:none;text-align:center;border-radius:18px;padding:12px 10px;font-weight:800;font-size:13px;cursor:pointer}.bottom-nav a{background:linear-gradient(135deg,#25d366,#1da851);color:white}.bottom-nav button{background:#fff;color:var(--dark)}
+    .about,.tracking{margin:6px 16px 18px;background:#fff;border-radius:24px;padding:18px;border:1px solid rgba(201,151,75,.14);box-shadow:0 10px 24px rgba(25,16,13,.06)}
+    .about h3,.tracking h3{font-size:20px;margin-bottom:8px}.about p,.tracking p{font-size:14px;color:var(--muted);line-height:1.75}.about ul{margin-top:10px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.8}
+    .tracking{background:linear-gradient(135deg,#fff,#fff7eb)}
+    .track-form{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:13px}
+    .track-form input{border:1px solid rgba(201,151,75,.28);background:#fff;border-radius:16px;padding:13px;outline:none;font-size:14px;min-width:0}
+    .track-form button{border:0;border-radius:16px;padding:13px 16px;background:var(--dark);color:#fff;font-weight:800;cursor:pointer;white-space:nowrap}
+    .track-result{display:none;margin-top:14px;border-radius:18px;padding:14px;background:#fff;border:1px solid rgba(201,151,75,.18);box-shadow:0 8px 18px rgba(25,16,13,.04)}
+    .track-result.show{display:block}
+    .track-result.error{border-color:rgba(173,52,52,.28);background:#fff1f1;color:#9b1c1c}
+    .track-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+    .track-head b{font-size:16px}
+    .status-pill{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#fff3cd;color:#8a5a00;border:1px solid rgba(138,90,0,.18)}
+    .status-accepted,.status-confirmed{background:#eafff1;color:#198754;border-color:rgba(25,135,84,.22)}
+    .status-cancelled{background:#fff1f1;color:#ad3434;border-color:rgba(173,52,52,.25)}
+    .status-delivered{background:#eef6ff;color:#0b5ed7;border-color:rgba(11,94,215,.18)}
+    .track-grid{display:grid;gap:8px}
+    .track-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(201,151,75,.12);padding:8px 0;font-size:13px}
+    .track-row span{color:var(--muted)}
+    .track-row b{text-align:right;word-break:break-word}
+    .track-items{white-space:pre-wrap;line-height:1.7;font-size:13px;background:var(--bg);border-radius:14px;padding:10px;margin-top:8px;color:var(--dark)}
+    .bottom-nav{position:fixed;left:12px;right:12px;bottom:12px;z-index:22;background:rgba(25,16,13,.94);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;box-shadow:0 15px 40px rgba(25,16,13,.28);backdrop-filter:blur(12px)}
+    .bottom-nav a,.bottom-nav button{border:0;text-decoration:none;text-align:center;border-radius:18px;padding:12px 8px;font-weight:800;font-size:12px;cursor:pointer}.bottom-nav a{background:linear-gradient(135deg,#25d366,#1da851);color:white}.bottom-nav button{background:#fff;color:var(--dark)}
     .modal{position:fixed;inset:0;background:rgba(25,16,13,.55);z-index:50;display:none;align-items:flex-end;justify-content:center;padding:12px}.modal.show{display:flex}.sheet{background:#fff;width:min(560px,100%);max-height:92vh;overflow:auto;border-radius:28px;padding:15px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
     .sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.sheet-head h3{font-size:20px}.close{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);font-size:20px;cursor:pointer}.detail-img{width:100%;height:330px;object-fit:cover;border-radius:22px;margin-bottom:12px;background:var(--soft)}
     .detail-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:8px 0}.detail-meta b{font-size:22px}.desc{font-size:14px;color:var(--muted);line-height:1.7;margin:10px 0 14px}.option{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:8px 0;font-size:13px;color:var(--muted);line-height:1.6}
@@ -56,8 +74,8 @@
     .checkout.blocked{background:#e8e0d7!important;color:#9a8b82!important;cursor:not-allowed;opacity:.78;box-shadow:none}
     .payment-popup{position:fixed;left:18px;right:18px;bottom:105px;z-index:80;background:#19100d;color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 15px 40px rgba(25,16,13,.28);display:none;font-size:13px;line-height:1.6;text-align:center}
     .payment-popup.show{display:block}
-    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}.payment-popup{left:50%;right:auto;transform:translateX(-50%);width:520px}}
-    @media(max-width:370px){.products{gap:10px;padding:0 12px}.product-card img{height:165px}.info{padding:10px}.actions{grid-template-columns:1fr}.hero h2{font-size:25px}.features{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box select{width:100%}}
+    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:620px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}.payment-popup{left:50%;right:auto;transform:translateX(-50%);width:520px}}
+    @media(max-width:370px){.products{gap:10px;padding:0 12px}.product-card img{height:165px}.info{padding:10px}.actions{grid-template-columns:1fr}.hero h2{font-size:25px}.features{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box select{width:100%}.track-form{grid-template-columns:1fr}.bottom-nav a,.bottom-nav button{font-size:11px;padding:11px 6px}}
   </style>
 </head>
 <body>
@@ -96,6 +114,7 @@
     <p>সুন্দর ডিজাইন, ভালো কাপড়, রিয়েল ছবি এবং Cash on Delivery সুবিধা। এখন সব প্রোডাক্ট ডেমো হিসেবে দেওয়া হয়েছে; পরে রিয়েল ছবি ও দাম বসানো যাবে।</p>
     <div class="hero-actions">
       <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">কালেকশন দেখুন</button>
+      <button class="secondary" onclick="document.getElementById('trackOrder').scrollIntoView({behavior:'smooth'})">অর্ডার ট্র্যাক করুন</button>
       <button class="secondary" onclick="openCart()">অর্ডার লিস্ট</button>
     </div>
   </section>
@@ -126,6 +145,16 @@
 
   <main class="products" id="productGrid"></main>
 
+  <section class="tracking" id="trackOrder">
+    <h3>অর্ডার ট্র্যাক করুন</h3>
+    <p>আপনার Order ID লিখে অর্ডারের বর্তমান অবস্থা দেখুন। যেমন: Pending, Accepted, Cancelled বা Delivered।</p>
+    <div class="track-form">
+      <input id="trackOrderInput" type="text" placeholder="Order ID লিখুন, যেমন 297101">
+      <button onclick="trackOrder()">Track Order</button>
+    </div>
+    <div class="track-result" id="trackResult"></div>
+  </section>
+
   <section class="about">
     <h3>কেন আমাদের কালেকশন?</h3>
     <p>এই ওয়েবসাইটটি Manha Premium Collection-এর প্রাথমিক ডেমো ভার্সন। এখন প্রোডাক্টগুলো ফেইক/ডেমো রাখা হয়েছে; পরে রিয়েল থ্রি-পিস ছবি, দাম, প্রোডাক্ট কোড এবং ডেলিভারি চার্জ বসানো যাবে।</p>
@@ -137,8 +166,9 @@
   </section>
 
   <nav class="bottom-nav">
-    <a id="waQuick" href="#" target="_blank">WhatsApp করুন</a>
-    <button onclick="openCart()">কার্ট / অর্ডার</button>
+    <a id="waQuick" href="#" target="_blank">WhatsApp</a>
+    <button onclick="document.getElementById('trackOrder').scrollIntoView({behavior:'smooth'})">Track</button>
+    <button onclick="openCart()">কার্ট</button>
   </nav>
 
   <div class="modal" id="detailModal">
@@ -615,6 +645,103 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Website এ অর্ডার সাবমিট করুন';
       }
+    }
+
+    function escapeHTML(text){
+      return String(text || '').replace(/[&<>"']/g, function(match){
+        return {
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '"':'&quot;',
+          "'":'&#039;'
+        }[match];
+      });
+    }
+
+    function getStatusClass(status){
+      const s = String(status || '').toLowerCase();
+      if(s.includes('accepted') || s.includes('confirmed') || s.includes('confirm')) return 'status-accepted';
+      if(s.includes('cancel')) return 'status-cancelled';
+      if(s.includes('deliver')) return 'status-delivered';
+      return 'status-pending';
+    }
+
+    function showTrackMessage(message, isError=false){
+      const box = document.getElementById('trackResult');
+      box.className = 'track-result show' + (isError ? ' error' : '');
+      box.innerHTML = escapeHTML(message);
+    }
+
+    function trackOrder(){
+      const input = document.getElementById('trackOrderInput');
+      const orderId = input.value.trim();
+
+      if(!orderId){
+        showTrackMessage('অনুগ্রহ করে আপনার Order ID লিখুন।', true);
+        return;
+      }
+
+      showTrackMessage('অর্ডার খোঁজা হচ্ছে...');
+
+      const callbackName = 'trackCallback_' + Date.now();
+      const script = document.createElement('script');
+
+      window[callbackName] = function(data){
+        try{
+          renderTrackResult(data);
+        }finally{
+          delete window[callbackName];
+          if(script && script.parentNode) script.parentNode.removeChild(script);
+        }
+      };
+
+      script.onerror = function(){
+        showTrackMessage('Tracking data লোড হয়নি। ইন্টারনেট বা API link চেক করে আবার চেষ্টা করুন।', true);
+        delete window[callbackName];
+        if(script && script.parentNode) script.parentNode.removeChild(script);
+      };
+
+      script.src = GOOGLE_SHEET_WEB_APP_URL + '?action=track&order_id=' + encodeURIComponent(orderId) + '&callback=' + callbackName;
+      document.body.appendChild(script);
+    }
+
+    function renderTrackResult(data){
+      const box = document.getElementById('trackResult');
+
+      if(!data || data.result === 'error'){
+        showTrackMessage(data && data.message ? data.message : 'Tracking করতে সমস্যা হয়েছে।', true);
+        return;
+      }
+
+      if(data.result === 'not_found'){
+        showTrackMessage(data.message || 'এই Order ID দিয়ে কোনো অর্ডার পাওয়া যায়নি।', true);
+        return;
+      }
+
+      const o = data.order || {};
+      const status = o.order_status || 'Pending';
+      const statusClass = getStatusClass(status);
+
+      box.className = 'track-result show';
+      box.innerHTML = `
+        <div class="track-head">
+          <b>Order ID: ${escapeHTML(o.order_id)}</b>
+          <span class="status-pill ${statusClass}">${escapeHTML(status)}</span>
+        </div>
+        <div class="track-grid">
+          <div class="track-row"><span>Order Time</span><b>${escapeHTML(o.order_datetime)}</b></div>
+          <div class="track-row"><span>Customer</span><b>${escapeHTML(o.customer_name)}</b></div>
+          <div class="track-row"><span>Phone</span><b>${escapeHTML(o.customer_phone)}</b></div>
+          <div class="track-row"><span>Delivery Area</span><b>${escapeHTML(o.delivery_area)}</b></div>
+          <div class="track-row"><span>Payment</span><b>${escapeHTML(o.payment_method)}</b></div>
+          <div class="track-row"><span>Subtotal</span><b>${escapeHTML(o.subtotal)}</b></div>
+          <div class="track-row"><span>Delivery Charge</span><b>${escapeHTML(o.delivery_charge)}</b></div>
+          <div class="track-row"><span>Grand Total</span><b>${escapeHTML(o.grand_total)}</b></div>
+          <div class="track-row"><span>Admin Note</span><b>${escapeHTML(o.admin_note || 'N/A')}</b></div>
+        </div>
+        <div class="track-items">${escapeHTML(o.order_items || '')}</div>
+      `;
     }
 
     document.querySelectorAll('.modal').forEach(m => {
