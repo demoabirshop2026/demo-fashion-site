@@ -26,6 +26,7 @@
     .form input,.form textarea,.form select{border:1px solid rgba(201,151,75,.25);background:#fff;border-radius:16px;padding:13px;outline:none;font-size:14px}
     .form textarea{min-height:82px;resize:vertical}
     .primary{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1c120e;font-weight:800;font-size:15px;cursor:pointer}
+    .primary:disabled{background:#e8e0d7!important;color:#9a8b82!important;cursor:not-allowed;opacity:.78}
     .dark-btn{border:0;border-radius:18px;padding:14px;background:var(--dark);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
     .green-btn{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,#25d366,#1da851);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
     .back-btn{border:0;border-radius:999px;padding:12px 15px;background:var(--soft);color:var(--dark);font-weight:800;font-size:13px;cursor:pointer;margin-bottom:12px}
@@ -34,6 +35,8 @@
     .success{display:none;background:#eafff1;color:#198754;border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:11px;font-size:13px;line-height:1.6;margin-bottom:12px}
     .success.show{display:block}
     .hint{background:var(--bg);border:1px solid rgba(201,151,75,.15);border-radius:16px;padding:12px;font-size:13px;color:var(--muted);line-height:1.7;margin-top:12px}
+    .lock-note{background:#fff1f1;border:1px solid rgba(173,52,52,.22);color:#9b1c1c;border-radius:16px;padding:11px;font-size:12px;line-height:1.6;margin-top:10px}
+    .flow-note{background:#f7f2ea;border:1px solid rgba(201,151,75,.22);color:var(--muted);border-radius:16px;padding:11px;font-size:12px;line-height:1.6;margin-top:10px}
     .admin{display:none;padding:16px 16px 90px}
     .admin.show{display:block}
     .dashboard-home.hide{display:none}
@@ -217,7 +220,7 @@
 
         <div class="toolbar">
           <div class="hint" style="margin-top:0">
-            Active Status: Pending → Accepted → Processing → Delivered
+            Active Status Flow: Pending → Accepted → Processing → Delivered. Cancelled/Delivered হলে status locked থাকবে।
           </div>
           <button class="green-btn" onclick="loadActiveOrders()">Refresh Orders</button>
         </div>
@@ -253,8 +256,6 @@
     const ADMIN_PASSWORD = 'manha123';
 
     const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwFamamhfmI9XfydI16raK44op1yhow8Qg52EktDnDh4mjnHq3JeB3aqkU7HR84EwMr0g/exec';
-
-    const STATUS_LIST = ['Pending', 'Accepted', 'Processing', 'Delivered', 'Cancelled'];
 
     function loginAdmin(){
       const user = document.getElementById('adminUser').value.trim();
@@ -336,6 +337,71 @@
       return String(value || 'order').replace(/[^a-zA-Z0-9_-]/g, '_');
     }
 
+    function normalizeStatus(status){
+      return String(status || 'Pending').trim();
+    }
+
+    function isFinalStatus(status){
+      const s = normalizeStatus(status);
+      return s === 'Delivered' || s === 'Cancelled';
+    }
+
+    function getAllowedStatusList(currentStatus){
+      const s = normalizeStatus(currentStatus);
+
+      if(s === 'Pending'){
+        return ['Pending', 'Accepted', 'Cancelled'];
+      }
+
+      if(s === 'Accepted'){
+        return ['Accepted', 'Processing', 'Cancelled'];
+      }
+
+      if(s === 'Processing'){
+        return ['Processing', 'Delivered', 'Cancelled'];
+      }
+
+      if(s === 'Delivered'){
+        return ['Delivered'];
+      }
+
+      if(s === 'Cancelled'){
+        return ['Cancelled'];
+      }
+
+      return ['Pending', 'Accepted', 'Processing', 'Delivered', 'Cancelled'];
+    }
+
+    function isValidNextStatus(currentStatus, newStatus){
+      return getAllowedStatusList(currentStatus).includes(newStatus);
+    }
+
+    function getFlowText(status){
+      const s = normalizeStatus(status);
+
+      if(s === 'Pending'){
+        return 'Allowed next: Accepted অথবা Cancelled';
+      }
+
+      if(s === 'Accepted'){
+        return 'Allowed next: Processing অথবা Cancelled';
+      }
+
+      if(s === 'Processing'){
+        return 'Allowed next: Delivered অথবা Cancelled';
+      }
+
+      if(s === 'Delivered'){
+        return 'Delivered final status. আর update করা যাবে না।';
+      }
+
+      if(s === 'Cancelled'){
+        return 'Cancelled final status. আর update করা যাবে না।';
+      }
+
+      return 'Status flow rule active.';
+    }
+
     function showMessage(message){
       const msg = document.getElementById('globalMsg');
       const err = document.getElementById('globalError');
@@ -391,7 +457,9 @@
     }
 
     function statusOptions(selected){
-      return STATUS_LIST.map(status => {
+      const allowed = getAllowedStatusList(selected);
+
+      return allowed.map(status => {
         const isSelected = status === selected ? 'selected' : '';
         return `<option value="${status}" ${isSelected}>${status}</option>`;
       }).join('');
@@ -406,7 +474,9 @@
       const orderId = String(order.order_id || '').trim();
       const key = prefix + '_' + safeId(orderId);
       const encodedOrderId = encodeURIComponent(orderId);
-      const status = order.order_status || 'Pending';
+      const status = normalizeStatus(order.order_status || 'Pending');
+      const finalLocked = isFinalStatus(status);
+      const flowText = getFlowText(status);
 
       return `
         <div class="order-card">
@@ -442,12 +512,18 @@
             Cancelled At: ${valueOrNA(order.cancelled_at)}
           </div>
 
+          <div class="${finalLocked ? 'lock-note' : 'flow-note'}">
+            ${escapeHTML(flowText)}
+          </div>
+
           <div class="update-box">
-            <select id="status_${key}">
+            <select id="status_${key}" ${finalLocked ? 'disabled' : ''}>
               ${statusOptions(status)}
             </select>
-            <textarea id="note_${key}" placeholder="Admin Note">${escapeHTML(order.admin_note || '')}</textarea>
-            <button class="primary" id="btn_${key}" onclick="updateOrderFromCard('${encodedOrderId}','${key}')">Update</button>
+            <textarea id="note_${key}" placeholder="Admin Note" ${finalLocked ? 'disabled' : ''}>${escapeHTML(order.admin_note || '')}</textarea>
+            <button class="primary" id="btn_${key}" onclick="updateOrderFromCard('${encodedOrderId}','${key}','${escapeHTML(status)}')" ${finalLocked ? 'disabled' : ''}>
+              ${finalLocked ? 'Locked' : 'Update'}
+            </button>
           </div>
         </div>
       `;
@@ -519,7 +595,7 @@
       }
     }
 
-    async function updateOrderFromCard(encodedOrderId, key){
+    async function updateOrderFromCard(encodedOrderId, key, currentStatus){
       const orderId = decodeURIComponent(encodedOrderId);
       const statusEl = document.getElementById('status_' + key);
       const noteEl = document.getElementById('note_' + key);
@@ -530,8 +606,20 @@
         return;
       }
 
+      const oldStatus = normalizeStatus(currentStatus);
       const status = statusEl.value;
       const adminNote = noteEl.value.trim();
+
+      if(isFinalStatus(oldStatus)){
+        showError('এই order final status-এ আছে। Delivered/Cancelled order আর update করা যাবে না।');
+        return;
+      }
+
+      if(!isValidNextStatus(oldStatus, status)){
+        showError(`Invalid status flow. ${oldStatus} থেকে ${status} করা যাবে না।`);
+        statusEl.value = oldStatus;
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Updating...';
