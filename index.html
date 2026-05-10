@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans Bengali',system-ui,sans-serif}
-    :root{--bg:#fff8f2;--card:#fff;--dark:#19100d;--muted:#76645c;--gold:#c9974b;--gold2:#f1d08a;--soft:#f6e6d8;--danger:#ad3434;--shadow:0 14px 35px rgba(25,16,13,.12)}
+    :root{--bg:#fff8f2;--card:#fff;--dark:#19100d;--muted:#76645c;--gold:#c9974b;--gold2:#f1d08a;--soft:#f6e6d8;--danger:#ad3434;--success:#198754;--shadow:0 14px 35px rgba(25,16,13,.12)}
     body{background:var(--bg);color:var(--dark);padding-bottom:88px}
     button{font-family:inherit}
     .topbar{position:sticky;top:0;z-index:20;background:rgba(255,248,242,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,151,75,.18);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -49,12 +49,25 @@
     .sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.sheet-head h3{font-size:20px}.close{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);font-size:20px;cursor:pointer}.detail-img{width:100%;height:330px;object-fit:cover;border-radius:22px;margin-bottom:12px;background:var(--soft)}
     .detail-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:8px 0}.detail-meta b{font-size:22px}.desc{font-size:14px;color:var(--muted);line-height:1.7;margin:10px 0 14px}.option{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:8px 0;font-size:13px;color:var(--muted);line-height:1.6}
     .wide-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.wide-actions button,.wide-actions a{border:0;border-radius:18px;padding:13px 12px;text-decoration:none;text-align:center;font-weight:800;cursor:pointer}.wide-actions .add{background:var(--dark);color:#fff}.wide-actions .order{background:linear-gradient(135deg,#25d366,#1da851);color:#fff}
-    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(201,151,75,.15)}.cart-item img{width:64px;height:64px;border-radius:15px;object-fit:cover}.cart-item h4{font-size:13px}.cart-item p{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{width:26px;height:26px;border:0;border-radius:50%;background:var(--soft);font-weight:800}.remove{border:0;background:#fff0f0;color:var(--danger);padding:8px;border-radius:12px;font-weight:800}.total{display:flex;justify-content:space-between;align-items:center;margin:15px 0;font-size:18px;font-weight:800}.form{display:grid;gap:10px}.form input,.form textarea{border:1px solid rgba(201,151,75,.24);border-radius:16px;padding:12px;outline:none;font-family:inherit}.form textarea{min-height:70px;resize:vertical}.checkout{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,#25d366,#1da851);color:#fff;font-weight:800;font-size:15px;cursor:pointer}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}
-    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(201,151,75,.15)}.cart-item img{width:64px;height:64px;border-radius:15px;object-fit:cover}.cart-item h4{font-size:13px}.cart-item p{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{width:26px;height:26px;border:0;border-radius:50%;background:var(--soft);font-weight:800}.remove{border:0;background:#fff0f0;color:var(--danger);padding:8px;border-radius:12px;font-weight:800}
+    .summary{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:13px 0}.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);padding:5px 0}.summary-row.total{font-size:19px;color:var(--dark);font-weight:800;border-top:1px solid rgba(201,151,75,.18);margin-top:6px;padding-top:11px}.delivery-select{border:1px solid rgba(201,151,75,.24);background:#fff;border-radius:16px;padding:12px;outline:none;width:100%;font-family:inherit}.form{display:grid;gap:10px}.form input,.form textarea{border:1px solid rgba(201,151,75,.24);border-radius:16px;padding:12px;outline:none;font-family:inherit}.form textarea{min-height:70px;resize:vertical}.order-buttons{display:grid;grid-template-columns:1fr;gap:10px}.checkout{border:0;border-radius:18px;padding:14px;color:#fff;font-weight:800;font-size:15px;cursor:pointer}.checkout.whatsapp{background:linear-gradient(135deg,#25d366,#1da851)}.checkout.website{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#19100d}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}.success-msg{display:none;background:#eafff1;color:var(--success);border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:12px;font-size:13px;line-height:1.6}.success-msg.show{display:block}
+    @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}}
     @media(max-width:370px){.products{gap:10px;padding:0 12px}.product-card img{height:165px}.info{padding:10px}.actions{grid-template-columns:1fr}.hero h2{font-size:25px}.features{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box select{width:100%}}
   </style>
 </head>
 <body>
+  <form name="website-order" method="POST" data-netlify="true" netlify hidden>
+    <input type="hidden" name="form-name" value="website-order">
+    <input type="text" name="customer_name">
+    <input type="text" name="customer_phone">
+    <textarea name="customer_address"></textarea>
+    <input type="text" name="delivery_area">
+    <input type="text" name="delivery_charge">
+    <textarea name="order_items"></textarea>
+    <input type="text" name="subtotal">
+    <input type="text" name="grand_total">
+  </form>
+
   <header class="topbar">
     <div class="brand">
       <div class="logo">M</div>
@@ -96,7 +109,7 @@
     <ul>
       <li>মোবাইল দিয়ে সহজে চালানো যাবে</li>
       <li>প্রোডাক্ট ছবি/দাম কোডের মধ্যে সহজে বদলানো যাবে</li>
-      <li>Customer cart থেকে সরাসরি WhatsApp অর্ডার পাঠাতে পারবে</li>
+      <li>Customer cart থেকে WhatsApp বা Website—দুইভাবেই অর্ডার করতে পারবে</li>
     </ul>
   </section>  <nav class="bottom-nav">
     <a id="waQuick" href="#" target="_blank">WhatsApp করুন</a>
@@ -126,17 +139,30 @@
         <button class="close" onclick="closeModal('cartModal')">×</button>
       </div>
       <div id="cartItems"></div>
-      <div class="total"><span>মোট</span><span id="cartTotal">৳0</span></div>
+      <div class="summary">
+        <label for="deliveryArea" style="display:block;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px">ডেলিভারি এরিয়া</label>
+        <select id="deliveryArea" class="delivery-select" onchange="renderCart()">
+          <option value="inside_dhaka" data-charge="70">ঢাকার ভিতরে — ৳70</option>
+          <option value="outside_dhaka" data-charge="130">ঢাকার বাহিরে — ৳130</option>
+        </select>
+        <div class="summary-row"><span>প্রোডাক্ট মূল্য</span><b id="cartSubtotal">৳0</b></div>
+        <div class="summary-row"><span>ডেলিভারি চার্জ</span><b id="deliveryCharge">৳70</b></div>
+        <div class="summary-row total"><span>সর্বমোট</span><span id="cartTotal">৳0</span></div>
+      </div>
       <div class="form">
         <input id="customerName" placeholder="আপনার নাম">
         <input id="customerPhone" placeholder="মোবাইল নাম্বার">
         <textarea id="customerAddress" placeholder="পূর্ণ ঠিকানা"></textarea>
-        <button class="checkout" onclick="checkoutWhatsApp()">WhatsApp এ অর্ডার পাঠান</button>
+        <div class="success-msg" id="websiteOrderSuccess">অর্ডার Website-এ সাবমিট হয়েছে। আমরা দ্রুত যোগাযোগ করবো।</div>
+        <div class="order-buttons">
+          <button class="checkout whatsapp" onclick="checkoutWhatsApp()">WhatsApp এ অর্ডার পাঠান</button>
+          <button class="checkout website" onclick="submitWebsiteOrder()">Website এ অর্ডার সাবমিট করুন</button>
+        </div>
       </div>
-      <p class="note">নোট: এটি প্রাথমিক ডেমো ওয়েবসাইট। WhatsApp নাম্বার কোডের মধ্যে তোমার আসল নাম্বার দিয়ে বদলাতে হবে।</p>
+      <p class="note">নোট: WhatsApp অর্ডার সরাসরি WhatsApp-এ যাবে। Website Submit করলে অর্ডার Netlify Forms-এ সেভ হবে।</p>
     </div>
   </div>  <script>
-    const WHATSAPP_NUMBER = '8801746785447'; // এখানে তোমার আসল WhatsApp নাম্বার বসাবে, যেমন 8801712345678
+    const WHATSAPP_NUMBER = '8801746785447';
 
     const products = [
       {
@@ -216,6 +242,23 @@
     let cart = [];
 
     function money(n){return '৳' + n.toLocaleString('en-US')}
+
+    function getDeliveryInfo(){
+      const select = document.getElementById('deliveryArea');
+      if(!select) return {area:'ঢাকার ভিতরে', charge:70};
+      const selected = select.options[select.selectedIndex];
+      return {
+        area: selected.textContent.replace(/—.*/, '').trim(),
+        charge: Number(selected.dataset.charge || 0)
+      };
+    }
+
+    function getSubtotal(){return cart.reduce((sum,i)=>sum + i.price * i.qty, 0)}
+    function getGrandTotal(){return getSubtotal() + getDeliveryInfo().charge}
+
+    function getOrderItemsText(separator='\n'){
+      return cart.map((i,idx)=>`${idx+1}. ${i.name} (${i.code}) x ${i.qty} = ${money(i.price*i.qty)}`).join(separator);
+    }
 
     function renderProducts(){
       const grid = document.getElementById('productGrid');
@@ -301,11 +344,21 @@
 
     function renderCart(){
       const wrap = document.getElementById('cartItems');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const deliveryEl = document.getElementById('deliveryCharge');
+      const totalEl = document.getElementById('cartTotal');
+      const subtotal = getSubtotal();
+      const delivery = getDeliveryInfo();
+      const grandTotal = subtotal + delivery.charge;
+
       if(!cart.length){
         wrap.innerHTML = '<div class="empty">কার্টে এখনো কোনো প্রোডাক্ট নেই।</div>';
-        document.getElementById('cartTotal').textContent = money(0);
+        subtotalEl.textContent = money(0);
+        deliveryEl.textContent = money(delivery.charge);
+        totalEl.textContent = money(0);
         return;
       }
+
       wrap.innerHTML = cart.map(i => `
         <div class="cart-item">
           <img src="${i.image}" alt="${i.name}">
@@ -321,24 +374,83 @@
           <button class="remove" onclick="removeItem(${i.id})">X</button>
         </div>
       `).join('');
-      const total = cart.reduce((sum,i)=>sum + i.price * i.qty, 0);
-      document.getElementById('cartTotal').textContent = money(total);
+
+      subtotalEl.textContent = money(subtotal);
+      deliveryEl.textContent = money(delivery.charge);
+      totalEl.textContent = money(grandTotal);
     }
 
     function singleProductWhatsApp(p){
-      const msg = `Hello, I want to order this product:%0A%0AProduct: ${p.name}%0ACode: ${p.code}%0APrice: ${money(p.price)}%0A%0APlease confirm availability.`;
+      const delivery = getDeliveryInfo();
+      const productTotal = p.price + delivery.charge;
+      const msg = `Hello, I want to order this product:%0A%0AProduct: ${p.name}%0ACode: ${p.code}%0APrice: ${money(p.price)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0ATotal: ${money(productTotal)}%0A%0APlease confirm availability.`;
       return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
     }
 
-    function checkoutWhatsApp(){
-      if(!cart.length){alert('আগে কার্টে প্রোডাক্ট যোগ করুন');return;}
+    function validateOrder(){
+      if(!cart.length){alert('আগে কার্টে প্রোডাক্ট যোগ করুন');return false;}
       const name = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const address = document.getElementById('customerAddress').value.trim();
-      const total = cart.reduce((sum,i)=>sum + i.price * i.qty, 0);
-      const items = cart.map((i,idx)=>`${idx+1}. ${i.name} (${i.code}) x ${i.qty} = ${money(i.price*i.qty)}`).join('%0A');
-      const msg = `Assalamu Alaikum, I want to place an order.%0A%0A${items}%0A%0ATotal: ${money(total)}%0A%0AName: ${name || 'N/A'}%0APhone: ${phone || 'N/A'}%0AAddress: ${address || 'N/A'}%0A%0APlease confirm delivery charge and availability.`;
+      if(!name || !phone || !address){alert('নাম, মোবাইল নাম্বার এবং পূর্ণ ঠিকানা লিখুন');return false;}
+      return true;
+    }
+
+    function checkoutWhatsApp(){
+      if(!validateOrder()) return;
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
+      const delivery = getDeliveryInfo();
+      const subtotal = getSubtotal();
+      const grandTotal = subtotal + delivery.charge;
+      const items = getOrderItemsText('%0A');
+      const msg = `Assalamu Alaikum, I want to place an order.%0A%0A${items}%0A%0AProduct Total: ${money(subtotal)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0AGrand Total: ${money(grandTotal)}%0A%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0APlease confirm delivery charge and availability.`;
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
+    }
+
+    function encode(data){
+      return Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
+    }
+
+    async function submitWebsiteOrder(){
+      if(!validateOrder()) return;
+      const submitBtn = document.querySelector('.checkout.website');
+      const successBox = document.getElementById('websiteOrderSuccess');
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
+      const delivery = getDeliveryInfo();
+      const subtotal = getSubtotal();
+      const grandTotal = subtotal + delivery.charge;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'সাবমিট হচ্ছে...';
+      successBox.classList.remove('show');
+
+      try{
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode({
+            'form-name': 'website-order',
+            customer_name: name,
+            customer_phone: phone,
+            customer_address: address,
+            delivery_area: delivery.area,
+            delivery_charge: money(delivery.charge),
+            order_items: getOrderItemsText('\n'),
+            subtotal: money(subtotal),
+            grand_total: money(grandTotal)
+          })
+        });
+        successBox.classList.add('show');
+      }catch(error){
+        alert('অর্ডার সাবমিট হয়নি। ইন্টারনেট/Netlify Forms সেটিং চেক করে আবার চেষ্টা করুন।');
+      }finally{
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Website এ অর্ডার সাবমিট করুন';
+      }
     }
 
     document.querySelectorAll('.modal').forEach(m => {
