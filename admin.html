@@ -28,7 +28,7 @@
     .primary{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1c120e;font-weight:800;font-size:15px;cursor:pointer}
     .dark-btn{border:0;border-radius:18px;padding:14px;background:var(--dark);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
     .green-btn{border:0;border-radius:18px;padding:14px;background:linear-gradient(135deg,#25d366,#1da851);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
-    .danger-btn{border:0;border-radius:18px;padding:14px;background:var(--danger);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+    .back-btn{border:0;border-radius:999px;padding:12px 15px;background:var(--soft);color:var(--dark);font-weight:800;font-size:13px;cursor:pointer;margin-bottom:12px}
     .error{display:none;background:#fff1f1;color:#9b1c1c;border:1px solid rgba(173,52,52,.28);border-radius:16px;padding:11px;font-size:13px;line-height:1.6}
     .error.show{display:block}
     .success{display:none;background:#eafff1;color:#198754;border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:11px;font-size:13px;line-height:1.6;margin-bottom:12px}
@@ -36,6 +36,9 @@
     .hint{background:var(--bg);border:1px solid rgba(201,151,75,.15);border-radius:16px;padding:12px;font-size:13px;color:var(--muted);line-height:1.7;margin-top:12px}
     .admin{display:none;padding:16px 16px 90px}
     .admin.show{display:block}
+    .dashboard-home.hide{display:none}
+    .panel-view{display:none}
+    .panel-view.show{display:block}
     .welcome{background:linear-gradient(135deg,rgba(25,16,13,.92),rgba(96,64,44,.82));color:white;border-radius:28px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
     .welcome h2{font-size:25px;font-weight:800}
     .welcome p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.85);margin-top:7px}
@@ -56,6 +59,11 @@
     .quick-links a{text-decoration:none;text-align:center;border-radius:18px;padding:13px;font-weight:800;font-size:13px}
     .quick-links .site{background:var(--dark);color:white}
     .quick-links .sheet{background:linear-gradient(135deg,#25d366,#1da851);color:white}
+    .menu-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .menu-card{border:0;text-align:left;background:#fff;border:1px solid rgba(201,151,75,.18);border-radius:24px;padding:18px;box-shadow:0 10px 24px rgba(25,16,13,.06);cursor:pointer}
+    .menu-card b{display:block;font-size:20px;color:var(--dark);margin-bottom:6px}
+    .menu-card span{display:block;font-size:13px;color:var(--muted);line-height:1.6}
+    .menu-card .arrow{margin-top:12px;display:inline-block;background:var(--dark);color:#fff;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800}
     .toolbar{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 14px}
     .order-list{display:grid;gap:12px}
     .order-card{background:var(--bg);border:1px solid rgba(201,151,75,.18);border-radius:22px;padding:14px}
@@ -79,7 +87,7 @@
     .empty{background:#fff;border:1px dashed rgba(201,151,75,.35);border-radius:18px;padding:18px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
     .loading{background:#fff;border:1px solid rgba(201,151,75,.15);border-radius:18px;padding:18px;text-align:center;color:var(--muted);font-size:13px}
     .footer-note{text-align:center;color:var(--muted);font-size:12px;line-height:1.6;margin-top:10px}
-    @media(min-width:760px){body{max-width:1000px;margin:auto}.cards{grid-template-columns:repeat(4,1fr)}.row{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr auto}.admin{padding-left:20px;padding-right:20px}.order-grid{grid-template-columns:repeat(4,1fr)}.update-box{grid-template-columns:220px 1fr auto;align-items:start}}
+    @media(min-width:760px){body{max-width:1000px;margin:auto}.cards{grid-template-columns:repeat(4,1fr)}.row{grid-template-columns:1fr 1fr}.toolbar{grid-template-columns:1fr auto}.admin{padding-left:20px;padding-right:20px}.order-grid{grid-template-columns:repeat(4,1fr)}.update-box{grid-template-columns:220px 1fr auto;align-items:start}.menu-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:370px){.cards{grid-template-columns:1fr}.quick-links{grid-template-columns:1fr}.welcome h2{font-size:22px}.order-grid{grid-template-columns:1fr}.order-head{flex-direction:column}}
   </style>
 </head>
@@ -118,96 +126,126 @@
   </main>
 
   <main class="admin" id="adminDashboard">
-    <section class="welcome">
-      <h2>Welcome, Admin</h2>
-      <p>এখান থেকে active order দেখা, urgent order lookup, status update এবং admin note manage করা যাবে।</p>
-    </section>
-
-    <section class="cards">
-      <div class="card"><b>Step 3</b><span>Admin Login Done</span></div>
-      <div class="card"><b>Step 4</b><span>Order Management Active</span></div>
-      <div class="card"><b id="activeCountCard">0</b><span>Active Orders</span></div>
-      <div class="card"><b>Step 5</b><span>Google Login Later</span></div>
-    </section>
-
     <div class="success" id="globalMsg"></div>
     <div class="error" id="globalError"></div>
 
-    <section class="section">
-      <span class="badge green">Current Step 4</span>
-      <h3>Admin Dashboard Layout</h3>
-      <p>এখন admin panel থেকে active order দেখা এবং status update করা যাবে।</p>
-      <div class="quick-links">
-        <a class="site" href="index.html">Website দেখুন</a>
-        <a class="sheet" href="https://docs.google.com/spreadsheets/d/1kmsbwyLEXvP5XzJUCrX2jlC_cZjniMO2wGw75lVOgcA/edit" target="_blank">Google Sheet</a>
-      </div>
-    </section>
+    <div class="dashboard-home" id="dashboardHome">
+      <section class="welcome">
+        <h2>Welcome, Admin</h2>
+        <p>এখান থেকে active order দেখা, urgent order lookup, status update এবং admin note manage করা যাবে।</p>
+      </section>
 
-    <section class="section">
-      <span class="badge dark">Active Order Management</span>
-      <h3>Active Order Management</h3>
-      <p>Pending, Accepted এবং Processing order এখানে দেখা যাবে। Delivered/Cancelled হলে active list থেকে চলে যাবে।</p>
+      <section class="cards">
+        <div class="card"><b>Step 3</b><span>Admin Login Done</span></div>
+        <div class="card"><b>Step 4</b><span>Order Management Active</span></div>
+        <div class="card"><b id="activeCountCard">0</b><span>Active Orders</span></div>
+        <div class="card"><b>Step 5</b><span>Google Login Later</span></div>
+      </section>
 
-      <div class="toolbar">
-        <div class="hint" style="margin-top:0">
-          Active Status: Pending → Accepted → Processing → Delivered
+      <section class="section">
+        <span class="badge green">Current Step 4</span>
+        <h3>Admin Dashboard</h3>
+        <p>নিচের দুইটা menu থেকে order management section-এ প্রবেশ করুন। Dashboard clean রাখার জন্য order list এখানে দেখানো হচ্ছে না।</p>
+        <div class="quick-links">
+          <a class="site" href="index.html">Website দেখুন</a>
+          <a class="sheet" href="https://docs.google.com/spreadsheets/d/1kmsbwyLEXvP5XzJUCrX2jlC_cZjniMO2wGw75lVOgcA/edit" target="_blank">Google Sheet</a>
         </div>
-        <button class="green-btn" onclick="loadActiveOrders()">Refresh Orders</button>
-      </div>
+      </section>
 
-      <div id="activeOrdersList" class="order-list">
-        <div class="loading">Active orders loading...</div>
+      <section class="section">
+        <span class="badge dark">Order Management Menu</span>
+        <h3>Order Management</h3>
+        <p>যে কাজটি করতে চান সেটাতে ক্লিক করুন।</p>
+
+        <div class="menu-grid">
+          <button class="menu-card" onclick="openPanel('active')">
+            <b>Active Order Management</b>
+            <span>Pending, Accepted এবং Processing order list দেখুন এবং status update করুন।</span>
+            <span class="arrow">Open Active Orders</span>
+          </button>
+
+          <button class="menu-card" onclick="openPanel('quick')">
+            <b>Quick Order Lookup & Update</b>
+            <span>Order ID দিয়ে urgent order দ্রুত খুঁজে status/admin note update করুন।</span>
+            <span class="arrow">Search by Order ID</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section">
+        <span class="badge">Step 5 Placeholder</span>
+        <h3>Google Login + My Orders</h3>
+        <p>পরে customer Google দিয়ে login করলে তার নিজের order history, order details এবং status দেখতে পারবে।</p>
+        <button class="disabled-btn" disabled>Future: Google Login System</button>
+      </section>
+
+      <section class="section">
+        <span class="badge red">Step 6 Placeholder</span>
+        <h3>Pending Order Cancel System</h3>
+        <p>Pending order customer চাইলে cancel করতে পারবে। Accepted/Processing/Delivered হলে cancel করা যাবে না। Cancelled এবং Delivered order history-তে থাকবে।</p>
+        <button class="disabled-btn" disabled>Future: Cancel Request System</button>
+      </section>
+
+      <section class="section">
+        <h3>Future Google Sheet Columns</h3>
+        <p>Google Sheet-এ future-ready columns already backend থেকে support করা হচ্ছে:</p>
+        <div class="hint">
+          Customer Email<br>
+          Login Type<br>
+          Cancel Status<br>
+          Cancel Reason<br>
+          Cancel Requested At<br>
+          Cancelled At<br>
+          Accepted At<br>
+          Processing At<br>
+          Delivered At<br>
+          Updated At<br>
+          Last Updated By
+        </div>
+      </section>
+
+      <p class="footer-note">Manha Premium Collection Admin Panel — Step 4</p>
+    </div>
+
+    <section class="panel-view" id="activePanel">
+      <button class="back-btn" onclick="backToDashboard()">← Back to Dashboard</button>
+
+      <div class="section">
+        <span class="badge dark">Active Order Management</span>
+        <h3>Active Order Management</h3>
+        <p>Pending, Accepted এবং Processing order এখানে দেখা যাবে। Delivered/Cancelled হলে active list থেকে চলে যাবে।</p>
+
+        <div class="toolbar">
+          <div class="hint" style="margin-top:0">
+            Active Status: Pending → Accepted → Processing → Delivered
+          </div>
+          <button class="green-btn" onclick="loadActiveOrders()">Refresh Orders</button>
+        </div>
+
+        <div id="activeOrdersList" class="order-list">
+          <div class="empty">Active Order Management খুললে order list এখানে দেখা যাবে।</div>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <span class="badge">Quick Order Lookup & Update</span>
-      <h3>Quick Order Lookup & Update</h3>
-      <p>অনেক order-এর মধ্যে urgent কোনো order থাকলে Order ID দিয়ে দ্রুত খুঁজে update করা যাবে।</p>
+    <section class="panel-view" id="quickPanel">
+      <button class="back-btn" onclick="backToDashboard()">← Back to Dashboard</button>
 
-      <div class="form row">
-        <input id="quickOrderId" type="text" placeholder="Order ID লিখুন">
-        <button class="dark-btn" onclick="quickLookup()">Search Order</button>
-      </div>
+      <div class="section">
+        <span class="badge">Quick Order Lookup & Update</span>
+        <h3>Quick Order Lookup & Update</h3>
+        <p>অনেক order-এর মধ্যে urgent কোনো order থাকলে Order ID দিয়ে দ্রুত খুঁজে update করা যাবে।</p>
 
-      <div id="quickResult" class="order-list" style="margin-top:12px">
-        <div class="empty">Order ID দিয়ে search করলে এখানে order details দেখা যাবে।</div>
-      </div>
-    </section>
+        <div class="form row">
+          <input id="quickOrderId" type="text" placeholder="Order ID লিখুন">
+          <button class="dark-btn" onclick="quickLookup()">Search Order</button>
+        </div>
 
-    <section class="section">
-      <span class="badge">Step 5 Placeholder</span>
-      <h3>Google Login + My Orders</h3>
-      <p>পরে customer Google দিয়ে login করলে তার নিজের order history, order details এবং status দেখতে পারবে।</p>
-      <button class="disabled-btn" disabled>Future: Google Login System</button>
-    </section>
-
-    <section class="section">
-      <span class="badge red">Step 6 Placeholder</span>
-      <h3>Pending Order Cancel System</h3>
-      <p>Pending order customer চাইলে cancel করতে পারবে। Accepted/Processing/Delivered হলে cancel করা যাবে না। Cancelled এবং Delivered order history-তে থাকবে।</p>
-      <button class="disabled-btn" disabled>Future: Cancel Request System</button>
-    </section>
-
-    <section class="section">
-      <h3>Future Google Sheet Columns</h3>
-      <p>Google Sheet-এ future-ready columns already backend থেকে support করা হচ্ছে:</p>
-      <div class="hint">
-        Customer Email<br>
-        Login Type<br>
-        Cancel Status<br>
-        Cancel Reason<br>
-        Cancel Requested At<br>
-        Cancelled At<br>
-        Accepted At<br>
-        Processing At<br>
-        Delivered At<br>
-        Updated At<br>
-        Last Updated By
+        <div id="quickResult" class="order-list" style="margin-top:12px">
+          <div class="empty">Order ID দিয়ে search করলে এখানে order details দেখা যাবে।</div>
+        </div>
       </div>
     </section>
-
-    <p class="footer-note">Manha Premium Collection Admin Panel — Step 4</p>
   </main>
 
   <script>
@@ -236,7 +274,8 @@
       document.getElementById('loginWrap').style.display = 'none';
       document.getElementById('adminDashboard').classList.add('show');
       document.getElementById('logoutBtn').style.display = 'inline-block';
-      loadActiveOrders();
+      backToDashboard(false);
+      refreshActiveCount();
     }
 
     function logoutAdmin(){
@@ -246,6 +285,34 @@
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('adminUser').value = '';
       document.getElementById('adminPass').value = '';
+    }
+
+    function openPanel(type){
+      document.getElementById('dashboardHome').classList.add('hide');
+      document.getElementById('activePanel').classList.remove('show');
+      document.getElementById('quickPanel').classList.remove('show');
+
+      if(type === 'active'){
+        document.getElementById('activePanel').classList.add('show');
+        loadActiveOrders();
+      }
+
+      if(type === 'quick'){
+        document.getElementById('quickPanel').classList.add('show');
+      }
+
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function backToDashboard(scroll = true){
+      document.getElementById('dashboardHome').classList.remove('hide');
+      document.getElementById('activePanel').classList.remove('show');
+      document.getElementById('quickPanel').classList.remove('show');
+      refreshActiveCount();
+
+      if(scroll){
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
     }
 
     document.getElementById('adminPass').addEventListener('keydown', function(e){
@@ -386,6 +453,20 @@
       `;
     }
 
+    async function refreshActiveCount(){
+      const countCard = document.getElementById('activeCountCard');
+
+      try{
+        const data = await apiRequest({action:'active'});
+
+        if(data.result === 'success'){
+          countCard.textContent = data.total || 0;
+        }
+      }catch(error){
+        countCard.textContent = '!';
+      }
+    }
+
     async function loadActiveOrders(){
       const wrap = document.getElementById('activeOrdersList');
       const countCard = document.getElementById('activeCountCard');
@@ -474,7 +555,11 @@
           document.getElementById('quickResult').innerHTML = renderOrderCard(data.order, 'quick');
         }
 
-        loadActiveOrders();
+        if(document.getElementById('activePanel').classList.contains('show')){
+          loadActiveOrders();
+        }else{
+          refreshActiveCount();
+        }
       }catch(error){
         showError(error.message);
       }finally{
