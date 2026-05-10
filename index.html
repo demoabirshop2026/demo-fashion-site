@@ -50,7 +50,7 @@
     .detail-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:8px 0}.detail-meta b{font-size:22px}.desc{font-size:14px;color:var(--muted);line-height:1.7;margin:10px 0 14px}.option{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:8px 0;font-size:13px;color:var(--muted);line-height:1.6}
     .wide-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.wide-actions button,.wide-actions a{border:0;border-radius:18px;padding:13px 12px;text-decoration:none;text-align:center;font-weight:800;cursor:pointer}.wide-actions .add{background:var(--dark);color:#fff}.wide-actions .order{background:linear-gradient(135deg,#25d366,#1da851);color:#fff}
     .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(201,151,75,.15)}.cart-item img{width:64px;height:64px;border-radius:15px;object-fit:cover}.cart-item h4{font-size:13px}.cart-item p{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{width:26px;height:26px;border:0;border-radius:50%;background:var(--soft);font-weight:800}.remove{border:0;background:#fff0f0;color:var(--danger);padding:8px;border-radius:12px;font-weight:800}
-    .summary{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:13px 0}.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);padding:5px 0}.summary-row.total{font-size:19px;color:var(--dark);font-weight:800;border-top:1px solid rgba(201,151,75,.18);margin-top:6px;padding-top:11px}.delivery-select{border:1px solid rgba(201,151,75,.24);background:#fff;border-radius:16px;padding:12px;outline:none;width:100%;font-family:inherit}.form{display:grid;gap:10px}.form input,.form textarea{border:1px solid rgba(201,151,75,.24);border-radius:16px;padding:12px;outline:none;font-family:inherit}.form textarea{min-height:70px;resize:vertical}.order-buttons{display:grid;grid-template-columns:1fr;gap:10px}.checkout{border:0;border-radius:18px;padding:14px;color:#fff;font-weight:800;font-size:15px;cursor:pointer}.checkout.whatsapp{background:linear-gradient(135deg,#25d366,#1da851)}.checkout.website{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#19100d}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}.success-msg{display:none;background:#eafff1;color:var(--success);border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:12px;font-size:13px;line-height:1.6}.success-msg.show{display:block}
+    .summary{background:var(--bg);border:1px solid rgba(201,151,75,.16);border-radius:18px;padding:12px;margin:13px 0}.summary-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);padding:5px 0}.summary-row.total{font-size:19px;color:var(--dark);font-weight:800;border-top:1px solid rgba(201,151,75,.18);margin-top:6px;padding-top:11px}.delivery-select{border:1px solid rgba(201,151,75,.24);background:#fff;border-radius:16px;padding:12px;outline:none;width:100%;font-family:inherit}.form{display:grid;gap:10px}.form input,.form textarea,.form select{border:1px solid rgba(201,151,75,.24);border-radius:16px;padding:12px;outline:none;font-family:inherit;background:#fff}.form textarea{min-height:70px;resize:vertical}.order-buttons{display:grid;grid-template-columns:1fr;gap:10px}.checkout{border:0;border-radius:18px;padding:14px;color:#fff;font-weight:800;font-size:15px;cursor:pointer}.checkout.whatsapp{background:linear-gradient(135deg,#25d366,#1da851)}.checkout.website{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#19100d}.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}.success-msg{display:none;background:#eafff1;color:var(--success);border:1px solid rgba(25,135,84,.22);border-radius:16px;padding:12px;font-size:13px;line-height:1.6}.success-msg.show{display:block}
     @media(min-width:760px){body{max-width:1060px;margin:auto}.products{grid-template-columns:repeat(4,1fr)}.product-card img{height:230px}.hero{min-height:360px}.hero h2{font-size:44px}.features{grid-template-columns:repeat(3,1fr)}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:520px}.search-box select{width:180px}.order-buttons{grid-template-columns:1fr 1fr}}
     @media(max-width:370px){.products{gap:10px;padding:0 12px}.product-card img{height:165px}.info{padding:10px}.actions{grid-template-columns:1fr}.hero h2{font-size:25px}.features{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box select{width:100%}}
   </style>
@@ -58,11 +58,15 @@
 <body>
   <form name="website-order" method="POST" data-netlify="true" netlify hidden>
     <input type="hidden" name="form-name" value="website-order">
+    <input type="text" name="order_id">
+    <input type="text" name="order_datetime">
     <input type="text" name="customer_name">
     <input type="text" name="customer_phone">
     <textarea name="customer_address"></textarea>
     <input type="text" name="delivery_area">
     <input type="text" name="delivery_charge">
+    <input type="text" name="payment_method">
+    <textarea name="customer_note"></textarea>
     <textarea name="order_items"></textarea>
     <input type="text" name="subtotal">
     <input type="text" name="grand_total">
@@ -77,7 +81,9 @@
       </div>
     </div>
     <button class="cart-btn" onclick="openCart()">কার্ট <span id="cartCount">0</span></button>
-  </header>  <section class="hero">
+  </header>
+
+  <section class="hero">
     <div class="tag">New Eid & Daily Premium Collection</div>
     <h2>প্রিমিয়াম থ্রি-পিস, ঘরে বসেই অর্ডার করুন</h2>
     <p>সুন্দর ডিজাইন, ভালো কাপড়, রিয়েল ছবি এবং Cash on Delivery সুবিধা। এখন সব প্রোডাক্ট ডেমো হিসেবে দেওয়া হয়েছে; পরে রিয়েল ছবি ও দাম বসানো যাবে।</p>
@@ -85,16 +91,22 @@
       <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">কালেকশন দেখুন</button>
       <button class="secondary" onclick="openCart()">অর্ডার লিস্ট</button>
     </div>
-  </section>  <section class="features">
+  </section>
+
+  <section class="features">
     <div class="feature"><b>COD</b><span>Cash on Delivery</span></div>
     <div class="feature"><b>Real Look</b><span>ভিডিও/ছবি সাপোর্ট</span></div>
     <div class="feature"><b>Fast Order</b><span>WhatsApp অর্ডার</span></div>
-  </section>  <div class="section-title" id="products">
+  </section>
+
+  <div class="section-title" id="products">
     <div>
       <h3>Featured Collection</h3>
       <p>ডেমো প্রোডাক্ট — পরে নিজের ছবি/দাম বসাবে</p>
     </div>
-  </div>  <div class="search-box">
+  </div>
+
+  <div class="search-box">
     <input id="searchInput" type="text" placeholder="নাম, কোড বা কাপড় দিয়ে সার্চ করুন..." oninput="renderProducts()">
     <select id="categoryFilter" onchange="renderProducts()">
       <option value="all">সব</option>
@@ -103,7 +115,11 @@
       <option value="embroidery">Embroidery</option>
       <option value="premium">Premium</option>
     </select>
-  </div>  <main class="products" id="productGrid"></main>  <section class="about">
+  </div>
+
+  <main class="products" id="productGrid"></main>
+
+  <section class="about">
     <h3>কেন আমাদের কালেকশন?</h3>
     <p>এই ওয়েবসাইটটি Manha Premium Collection-এর প্রাথমিক ডেমো ভার্সন। এখন প্রোডাক্টগুলো ফেইক/ডেমো রাখা হয়েছে; পরে রিয়েল থ্রি-পিস ছবি, দাম, প্রোডাক্ট কোড এবং ডেলিভারি চার্জ বসানো যাবে।</p>
     <ul>
@@ -111,10 +127,14 @@
       <li>প্রোডাক্ট ছবি/দাম কোডের মধ্যে সহজে বদলানো যাবে</li>
       <li>Customer cart থেকে WhatsApp বা Website—দুইভাবেই অর্ডার করতে পারবে</li>
     </ul>
-  </section>  <nav class="bottom-nav">
+  </section>
+
+  <nav class="bottom-nav">
     <a id="waQuick" href="#" target="_blank">WhatsApp করুন</a>
     <button onclick="openCart()">কার্ট / অর্ডার</button>
-  </nav>  <div class="modal" id="detailModal">
+  </nav>
+
+  <div class="modal" id="detailModal">
     <div class="sheet">
       <div class="sheet-head">
         <h3 id="detailTitle">Product</h3>
@@ -132,7 +152,9 @@
         <a class="order" id="detailOrderBtn" target="_blank">WhatsApp Order</a>
       </div>
     </div>
-  </div>  <div class="modal" id="cartModal">
+  </div>
+
+  <div class="modal" id="cartModal">
     <div class="sheet">
       <div class="sheet-head">
         <h3>আপনার অর্ডার কার্ট</h3>
@@ -153,6 +175,13 @@
         <input id="customerName" placeholder="আপনার নাম">
         <input id="customerPhone" placeholder="মোবাইল নাম্বার">
         <textarea id="customerAddress" placeholder="পূর্ণ ঠিকানা"></textarea>
+        <select id="paymentMethod">
+          <option value="Cash on Delivery" selected>Cash on Delivery</option>
+          <option value="bKash">bKash</option>
+          <option value="Nagad">Nagad</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+        </select>
+        <textarea id="customerNote" placeholder="কাস্টমার নোট / বিশেষ নির্দেশনা (Optional)"></textarea>
         <div class="success-msg" id="websiteOrderSuccess">অর্ডার Website-এ সাবমিট হয়েছে। আমরা দ্রুত যোগাযোগ করবো।</div>
         <div class="order-buttons">
           <button class="checkout whatsapp" onclick="checkoutWhatsApp()">WhatsApp এ অর্ডার পাঠান</button>
@@ -161,7 +190,9 @@
       </div>
       <p class="note">নোট: WhatsApp অর্ডার সরাসরি WhatsApp-এ যাবে। Website Submit করলে অর্ডার Netlify Forms-এ সেভ হবে।</p>
     </div>
-  </div>  <script>
+  </div>
+
+  <script>
     const WHATSAPP_NUMBER = '8801746785447';
 
     const products = [
@@ -255,6 +286,37 @@
 
     function getSubtotal(){return cart.reduce((sum,i)=>sum + i.price * i.qty, 0)}
     function getGrandTotal(){return getSubtotal() + getDeliveryInfo().charge}
+
+    function generateOrderId(){
+      const now = new Date();
+      const datePart = now.getFullYear().toString().slice(-2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+      const timePart = String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0') + String(now.getSeconds()).padStart(2,'0');
+      return `MPC-${datePart}-${timePart}`;
+    }
+
+    function getOrderDateTime(){
+      return new Date().toLocaleString('bn-BD', {
+        timeZone: 'Asia/Dhaka',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+
+    function clearOrderForm(){
+      cart = [];
+      updateCartCount();
+      renderCart();
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('customerAddress').value = '';
+      document.getElementById('customerNote').value = '';
+      document.getElementById('paymentMethod').value = 'Cash on Delivery';
+    }
 
     function getOrderItemsText(separator='\n'){
       return cart.map((i,idx)=>`${idx+1}. ${i.name} (${i.code}) x ${i.qty} = ${money(i.price*i.qty)}`).join(separator);
@@ -398,14 +460,20 @@
 
     function checkoutWhatsApp(){
       if(!validateOrder()) return;
+      const orderId = generateOrderId();
+      const orderDateTime = getOrderDateTime();
       const name = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const address = document.getElementById('customerAddress').value.trim();
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const customerNote = document.getElementById('customerNote').value.trim() || 'N/A';
       const delivery = getDeliveryInfo();
       const subtotal = getSubtotal();
       const grandTotal = subtotal + delivery.charge;
       const items = getOrderItemsText('%0A');
-      const msg = `Assalamu Alaikum, I want to place an order.%0A%0A${items}%0A%0AProduct Total: ${money(subtotal)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0AGrand Total: ${money(grandTotal)}%0A%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0APlease confirm delivery charge and availability.`;
+
+      const msg = `Assalamu Alaikum, I want to place an order.%0A%0AOrder ID: ${orderId}%0AOrder Time: ${orderDateTime}%0A%0A${items}%0A%0AProduct Total: ${money(subtotal)}%0ADelivery Area: ${delivery.area}%0ADelivery Charge: ${money(delivery.charge)}%0AGrand Total: ${money(grandTotal)}%0APayment Method: ${paymentMethod}%0ACustomer Note: ${customerNote}%0A%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0APlease confirm delivery charge and availability.`;
+
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     }
 
@@ -415,11 +483,17 @@
 
     async function submitWebsiteOrder(){
       if(!validateOrder()) return;
+
       const submitBtn = document.querySelector('.checkout.website');
       const successBox = document.getElementById('websiteOrderSuccess');
+
+      const orderId = generateOrderId();
+      const orderDateTime = getOrderDateTime();
       const name = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const address = document.getElementById('customerAddress').value.trim();
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const customerNote = document.getElementById('customerNote').value.trim() || 'N/A';
       const delivery = getDeliveryInfo();
       const subtotal = getSubtotal();
       const grandTotal = subtotal + delivery.charge;
@@ -429,22 +503,31 @@
       successBox.classList.remove('show');
 
       try{
-        await fetch('/', {
+        const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: encode({
             'form-name': 'website-order',
+            order_id: orderId,
+            order_datetime: orderDateTime,
             customer_name: name,
             customer_phone: phone,
             customer_address: address,
             delivery_area: delivery.area,
             delivery_charge: money(delivery.charge),
+            payment_method: paymentMethod,
+            customer_note: customerNote,
             order_items: getOrderItemsText('\n'),
             subtotal: money(subtotal),
             grand_total: money(grandTotal)
           })
         });
+
+        if(!response.ok){throw new Error('Order submit failed');}
+
+        successBox.textContent = `অর্ডার Website-এ সাবমিট হয়েছে। Order ID: ${orderId}`;
         successBox.classList.add('show');
+        clearOrderForm();
       }catch(error){
         alert('অর্ডার সাবমিট হয়নি। ইন্টারনেট/Netlify Forms সেটিং চেক করে আবার চেষ্টা করুন।');
       }finally{
